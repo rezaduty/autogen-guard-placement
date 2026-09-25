@@ -29,9 +29,15 @@ build on any disagreement.
     src/analyze.py         every macro and generated table
     src/verify_numbers.py  independent, fail-closed verifier
     src/check_figures.py   figure geometry, arrows and text rules
+    src/make_figures.py    data charts
     src/test_checks.py     breaks every check on purpose and confirms it fires
     results/               raw per-phase logs, captures, hand-read labels
     paper/                 source, generated tables, figures
+
+Concept diagrams (`paper/figures/fig_placements`, `fig_protocol`,
+`fig_frameworks`, `fig_studio`) are included as rendered PDFs only. Their
+sources are not distributed. `build.sh`, the render script and the figure
+checker use the shipped PDFs when a source is absent.
 
 ## Phases
 

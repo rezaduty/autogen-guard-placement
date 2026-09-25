@@ -67,6 +67,11 @@ class _Boxes(HTMLParser):
         self.stack, self.els = [], []
 
     def handle_starttag(self, tag, attrs):
+        if tag == "br":
+            owner = next((e for _, e in reversed(self.stack) if e is not None), None)
+            if owner is not None:
+                owner["segs"].append("")
+            return
         if tag != "div":
             return
         a = dict(attrs)
@@ -76,7 +81,8 @@ class _Boxes(HTMLParser):
         if "left" in st and "top" in st:
             el = {"classes": cls, "x": px(st.get("left")), "y": px(st.get("top")), "w": px(st.get("width")),
                   "h": px(st.get("height")), "title": "", "sub": "", "text": "",
-                  "is_box": "box" in cls, "is_zone": "zone" in cls}
+                  "is_box": "box" in cls, "is_zone": "zone" in cls, "is_head": "phead" in cls, "segs": [""],
+                  "iw": float(a.get("data-iw") or 0), "ih": float(a.get("data-ih") or 0)}
             self.els.append(el)
         self.stack.append((cls, el))
 
@@ -96,6 +102,7 @@ class _Boxes(HTMLParser):
         elif "s" in cls:
             owner["sub"] += data.strip()
         owner["text"] = (owner["text"] + " " + data.strip()).strip()
+        owner["segs"][-1] = (owner["segs"][-1] + " " + data.strip()).strip()
 
 
 def parse(html):
@@ -187,17 +194,35 @@ def check_figure(name):
     for bx in boxes:
         if not bx["w"] or not bx["h"]:
             continue
-        inner_w = bx["w"] - 2 * PAD_X
-        h = 0.0
+        # an icon beside the text narrows it, an icon above it adds height
+        inner_w = bx["w"] - 2 * PAD_X - bx.get("iw", 0)
+        h = bx.get("ih", 0)
         if bx["title"]:
             h += wrapped_lines(bx["title"], ft, inner_w) * ft * 1.25
         if bx["sub"]:
             h += 5 + wrapped_lines(bx["sub"], fs, inner_w) * fs * 1.3
-        need = h + 2 * PAD_Y
+        need = max(h, bx.get("iw", 0) - 10) + 2 * PAD_Y
         if need > bx["h"]:
             FAILURES.append(
                 f"{name}: label in box {bx['title']!r} needs about "
                 f"{need:.0f}px but the box is {bx['h']:.0f}px tall")
+
+    # 6. a panel heading, wrapped at its width, must clear every box below it
+    fh = fonts.get("phead", 21.0)
+    for hd in (e for e in els if e.get("is_head")):
+        fq = fonts.get("pq", fh)
+
+        def seg_lines(seg):
+            # the parenthesised qualifier is set in the smaller .pq size
+            title, _, qual = seg.partition("(")
+            width = len(title) * fh * AVG_GLYPH_RATIO + (len(qual) + 1 if qual else 0) * fq * AVG_GLYPH_RATIO
+            return max(1, math.ceil(width / hd["w"]))
+        lines = sum(seg_lines(seg) for seg in hd["segs"] if seg)
+        bottom = hd["y"] + lines * fh * 1.2
+        for bx in boxes:
+            if (bx["x"] < hd["x"] + hd["w"] and hd["x"] < bx["x"] + bx["w"]
+                    and hd["y"] < bx["y"] + bx["h"] and bx["y"] < bottom):
+                FAILURES.append(f"{name}: heading {hd['text']!r} runs into box {bx['title']!r}")
 
     print(f"  {name}: {len(boxes)} boxes, {len(zones)} zones, "
           f"canvas {W}x{H}, smallest type "
@@ -333,7 +358,16 @@ def check_text_rules(name):
 
 def main():
     print("Checking concept diagram geometry")
+    # The concept-diagram sources are not distributed with the artifact. When
+    # the generator is absent, a figure without its HTML is checked only for
+    # its rendered PDF. With the generator present a missing HTML fails.
+    full = pathlib.Path("src/make_diagrams.py").exists()
     for name in sorted(RENDER_WIDTH_IN):
+        if not full and not (FIGURES / f"{name}.html").exists():
+            if not (FIGURES / f"{name}.pdf").exists():
+                FAILURES.append(f"{name}: neither source nor rendered PDF present")
+            print(f"  {name}: source not distributed, rendered PDF present")
+            continue
         check_figure(name)
         check_text_rules(name)
         check_arrows(name)

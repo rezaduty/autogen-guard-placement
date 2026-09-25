@@ -147,14 +147,15 @@ CASES = [
     ("filler word", "verify", lambda d: tex(d, "The effect is clearly large."), "banned or vague"),
     ("uncited method", "verify", lambda d: tex(d, "We also discuss AgentDojo briefly."), "first used without a citation"),
     ("datasheet em dash", "verify", lambda d: edit(d / "data/README.md", lambda t: t + "\nA line \u2014 with a dash.\n"), "README.md: em dash"),
-    ("figure box overlap", "figures", lambda d: edit(d / "paper/figures/fig_placements.html", lambda t: t.replace('style="left:392px;top:212px', 'style="left:300px;top:212px')), "overlap"),
+    ("figure box overlap", "figures", lambda d: edit(d / "paper/figures/fig_placements.html", lambda t: t.replace('style="left:262px;top:332px', 'style="left:262px;top:280px')), "overlap"),
     ("figure digit", "figures", lambda d: edit(d / "paper/figures/fig_placements.html", lambda t: t.replace('<div class="t">Memory</div>', '<div class="t">Memory 3</div>')), "digit in visible text"),
-    ("figure small type", "figures", lambda d: edit(d / "paper/figures/fig_placements.html", lambda t: t.replace(".s{font-size:15px", ".s{font-size:11px")), "below the"),
+    ("figure small type", "figures", lambda d: edit(d / "paper/figures/fig_placements.html", lambda t: t.replace(".s{font-size:16px", ".s{font-size:11px")), "below the"),
     ("gateway outcome against its events", "verify", mut_gateway_outcome, "outcome disagrees with its events"),
     ("figure subtitled box overflow", "figures", lambda d: edit(d / "paper/figures/fig_frameworks.html", lambda t: t.replace('<div class="t">Graph node</div>', '<div class="t">Graph node inserted between the researcher and the writer in the state graph</div>')), "needs about"),
-    ("figure turned arrowhead", "figures", lambda d: edit(d / "paper/figures/fig_placements.html", lambda t: t.replace('C574,440 580,380 598,380 L620,380', 'C580,440 590,380 620,380')), "arrowhead turned"),
-    ("figure arrow short of its box", "figures", lambda d: edit(d / "paper/figures/fig_placements.html", lambda t: t.replace('<line x1="300" y1="186" x2="300" y2="210"', '<line x1="300" y1="186" x2="300" y2="199"')), "from the nearest box edge"),
-    ("figure wire through a box", "figures", lambda d: edit(d / "paper/figures/fig_placements.html", lambda t: t.replace('<!-- outputs -->', '<line x1="220" y1="440" x2="614" y2="440" stroke="#8a93a2" stroke-width="2" marker-end="url(#ag)"/>\n  <!-- outputs -->')), "passes through box"),
+    ("figure turned arrowhead", "figures", lambda d: edit(d / "paper/figures/fig_placements.html", lambda t: t.replace('C760,420 772,515 804,515 L820,515', 'C760,420 772,515 820,515')), "arrowhead turned"),
+    ("figure arrow short of its box", "figures", lambda d: edit(d / "paper/figures/fig_placements.html", lambda t: t.replace('<line x1="612" y1="470" x2="612" y2="442"', '<line x1="612" y1="470" x2="612" y2="452"')), "from the nearest box edge"),
+    ("figure wire through a box", "figures", lambda d: edit(d / "paper/figures/fig_placements.html", lambda t: t.replace('</svg>\n<div class="box', '<line x1="470" y1="600" x2="1080" y2="600" stroke="#8a93a2" stroke-width="2" marker-end="url(#m_flow)"/></svg>\n<div class="box', 1)), "passes through box"),
+    ("figure heading into a box", "figures", lambda d: edit(d / "paper/figures/fig_frameworks.html", lambda t: t.replace('(reaching an agent)', '(the text that reaches an agent through this channel)')), "runs into box"),
     ("figure label overflow", "figures", lambda d: edit(d / "paper/figures/fig_placements.html", lambda t: t.replace('<div class="t">Task</div>', '<div class="t">Task message typed by the user into the team chat window</div>')), "needs about"),
 ]
 
@@ -166,6 +167,13 @@ def run(kind, d):
 
 
 def main():
+    # The concept-diagram sources are not distributed with the artifact. Without
+    # them the figure cases cannot run, so the rest run and the recorded
+    # results/check_tests.json from the full build is kept.
+    full = (ROOT / "src" / "make_diagrams.py").exists()
+    cases = CASES if full else [c for c in CASES if c[1] != "figures"]
+    if not full:
+        print("diagram sources not present: figure cases skipped, recorded results kept")
     # The unmodified copy must pass, or every case below proves nothing.
     with tempfile.TemporaryDirectory() as t:
         d = pathlib.Path(t)
@@ -176,7 +184,7 @@ def main():
                 print(f"baseline {kind} fails on the unmodified copy:\n{r.stdout[-800:]}")
                 sys.exit(1)
     bad = 0
-    for name, kind, mutate, expect in CASES:
+    for name, kind, mutate, expect in cases:
         with tempfile.TemporaryDirectory() as t:
             d = pathlib.Path(t)
             copy_project(d)
@@ -187,9 +195,10 @@ def main():
             print(f"  {'fires' if ok else 'SILENT':6s}  {name}")
             if not ok:
                 print("        exit", r.returncode, "|", r.stdout.strip().splitlines()[-3:])
-    print(f"{len(CASES) - bad} of {len(CASES)} checks fire when broken")
-    (ROOT / "results" / "check_tests.json").write_text(json.dumps(
-        {"cases": len(CASES), "fire": len(CASES) - bad, "names": [c[0] for c in CASES]}, indent=1))
+    print(f"{len(cases) - bad} of {len(cases)} checks fire when broken")
+    if full:
+        (ROOT / "results" / "check_tests.json").write_text(json.dumps(
+            {"cases": len(CASES), "fire": len(CASES) - bad, "names": [c[0] for c in CASES]}, indent=1))
     sys.exit(1 if bad else 0)
 
 

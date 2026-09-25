@@ -19,6 +19,7 @@ command -v pdflatex >/dev/null 2>&1 || {
 
 $PY src/analyze.py
 $PY src/make_figures.py
+if [ -f src/make_diagrams.py ]; then $PY src/make_diagrams.py; fi
 sh paper/figures/render_html_figs.sh
 $PY src/check_figures.py
 $PY src/test_checks.py

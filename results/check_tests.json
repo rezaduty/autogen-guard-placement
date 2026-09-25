@@ -1,6 +1,6 @@
 {
- "cases": 33,
- "fire": 33,
+ "cases": 34,
+ "fire": 34,
  "names": [
   "numeric disagreement",
   "verdict against raw output",
@@ -34,6 +34,7 @@
   "figure turned arrowhead",
   "figure arrow short of its box",
   "figure wire through a box",
+  "figure heading into a box",
   "figure label overflow"
  ]
 }

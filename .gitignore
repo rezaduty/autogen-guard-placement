@@ -10,3 +10,9 @@ paper/*.out
 paper/*.blg
 paper/*.pdf
 paper/arxiv_refs.json
+
+# Concept-diagram sources are not distributed. The rendered PDFs are.
+paper/figures/*.html
+src/diagram_kit.py
+src/make_diagrams.py
+src/make_studio_figure.py

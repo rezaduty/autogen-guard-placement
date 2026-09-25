@@ -1,0 +1,44 @@
+{
+ "lmstudio_base": "http://127.0.0.1:1234/v1",
+ "workbench_base": "http://127.0.0.1:8000",
+ "probe_file": "data/probes/probes.jsonl",
+ "agent_model": "qwen/qwen3.5-9b",
+ "reasoning_effort": "none",
+ "seed": 20260924,
+ "max_tool_iterations": 3,
+ "run_timeout_s": 300,
+ "entries": [
+  "tool",
+  "user",
+  "agent",
+  "memory"
+ ],
+ "placements": [
+  "model",
+  "bus",
+  "tool"
+ ],
+ "guards": {
+  "deberta": {
+   "model": "protectai/deberta-v3-base-prompt-injection-v2",
+   "revision": "90c9989b1a342275dd0d1a95aad283c04e075671",
+   "max_length": 512
+  },
+  "llm": {
+   "model": "qwen/qwen3.5-9b"
+  },
+  "workbench": [
+   "local-bionic-guard",
+   "model-6aad50b83c78"
+  ]
+ },
+ "phases": {
+  "0": "capture environment, model echo, workbench state",
+  "1": "standalone guard verdicts on each probe text and passage",
+  "2": "team runs, all placements observe, no blocking",
+  "3": "team runs, block at model client",
+  "4": "team runs, block at message bus",
+  "5": "team runs, block at tool boundary",
+  "6": "third-party corpus"
+ }
+}

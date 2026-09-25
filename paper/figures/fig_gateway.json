@@ -1,0 +1,37 @@
+{
+ "attack": {
+  "n": 50,
+  "blocked": 37,
+  "carrier": 23,
+  "passage": 6,
+  "ml": 8
+ },
+ "matched": {
+  "n": 50,
+  "blocked": 40,
+  "carrier": 32,
+  "passage": 8,
+  "ml": 0
+ },
+ "hn_imperative": {
+  "n": 17,
+  "blocked": 12,
+  "carrier": 10,
+  "passage": 2,
+  "ml": 0
+ },
+ "hn_vocab": {
+  "n": 17,
+  "blocked": 13,
+  "carrier": 10,
+  "passage": 3,
+  "ml": 0
+ },
+ "hn_identifier": {
+  "n": 16,
+  "blocked": 11,
+  "carrier": 11,
+  "passage": 0,
+  "ml": 0
+ }
+}

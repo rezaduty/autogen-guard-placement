@@ -1,0 +1,12 @@
+\begin{tabular}{llrrr}
+\toprule
+framework & hook & caught & late & false \\
+\midrule
+LangGraph & \texttt{before\_model} & 10/10 & 0/10 & 0/10 \\
+LangGraph & \texttt{wrap\_tool\_call} & 10/10 & 0/10 & 0/10 \\
+LangGraph & graph node & 0/10 & 10/10 & 0/10 \\
+CrewAI & \texttt{before\_llm\_call} & 10/10 & 0/10 & 10/10 \\
+CrewAI & \texttt{after\_tool\_call} & 10/10 & 0/10 & 0/10 \\
+CrewAI & task guardrail & 0/10 & 0/10 & 0/10 \\
+\bottomrule
+\end{tabular}

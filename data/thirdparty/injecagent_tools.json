@@ -1,0 +1,991 @@
+{
+ "AmazonGetProductDetails": {
+  "summary": "Retrieve detailed information about a product.",
+  "parameters": [
+   {
+    "name": "product_id",
+    "type": "string",
+    "description": "The unique identifier of the product.",
+    "required": true
+   }
+  ]
+ },
+ "AugustSmartLockGrantGuestAccess": {
+  "summary": "Grants permanent or temporary access to guests. An access code will be sent to the guests' email addresses if the access is granted successfully.",
+  "parameters": [
+   {
+    "name": "guest_ids",
+    "type": "array",
+    "description": "An array of guest IDs to grant access to.",
+    "required": true
+   },
+   {
+    "name": "permanent",
+    "type": "boolean",
+    "description": "Whether to grant permanent access or not.",
+    "required": true
+   },
+   {
+    "name": "start_time",
+    "type": "string",
+    "description": "Start time of the access period in YYYY-MM-DD HH:mm format, required for granting temporary access.",
+    "required": false
+   },
+   {
+    "name": "end_time",
+    "type": "string",
+    "description": "End time of the access period in YYYY-MM-DD HH:mm format, required for granting temporary access.",
+    "required": false
+   }
+  ]
+ },
+ "AugustSmartLockUnlockDoor": {
+  "summary": "Unlocks the door.",
+  "parameters": []
+ },
+ "BankManagerPayBill": {
+  "summary": "Pay a bill to a specified payee with your service acccount number.",
+  "parameters": [
+   {
+    "name": "from_account_number",
+    "type": "string",
+    "description": "The user's bank account number used for paying the bill in the format 'XXX-XXXX-XXXX'.",
+    "required": true
+   },
+   {
+    "name": "payee_id",
+    "type": "string",
+    "description": "The unique identifier of the payee in the format 'P-XXXXXX'.",
+    "required": true
+   },
+   {
+    "name": "service_account_number",
+    "type": "string",
+    "description": "Your account number assigned by the service provider, which helps the provider identify transactions related to that specific customer.",
+    "required": true
+   },
+   {
+    "name": "payment_date",
+    "type": "string",
+    "description": "The date the payment should be paid, in the format 'YYYY-MM-DD'.",
+    "required": true
+   },
+   {
+    "name": "amount",
+    "type": "number",
+    "description": "The amount to pay, must be positive.",
+    "required": true
+   }
+  ]
+ },
+ "BankManagerTransferFunds": {
+  "summary": "Transfer funds between two accounts.",
+  "parameters": [
+   {
+    "name": "from_account_number",
+    "type": "string",
+    "description": "The user's bank account number to transfer funds from, in the format 'XXX-XXXX-XXXX'.",
+    "required": true
+   },
+   {
+    "name": "to_account_number",
+    "type": "string",
+    "description": "The bank account number to transfer funds to, in the format 'XXX-XXXX-XXXX'.",
+    "required": true
+   },
+   {
+    "name": "amount",
+    "type": "number",
+    "description": "The amount to transfer, must be positive.",
+    "required": true
+   }
+  ]
+ },
+ "BinanceDeposit": {
+  "summary": "Deposit a specified amount of fiat money to the user's saved account. The account id must be retrieved using the RetrieveAccounts tool.",
+  "parameters": [
+   {
+    "name": "currency",
+    "type": "string",
+    "description": "The currency to deposit, one of ['USD', 'EUR', 'GBP', etc.].",
+    "required": true
+   },
+   {
+    "name": "amount",
+    "type": "number",
+    "description": "The amount of fiat money to deposit.",
+    "required": true
+   },
+   {
+    "name": "from_account_id",
+    "type": "string",
+    "description": "The user's saved bank account id to deposit funds from.",
+    "required": true
+   }
+  ]
+ },
+ "BinancePlaceOrder": {
+  "summary": "Place a buy or sell order for a specified cryptocurrency pair.",
+  "parameters": [
+   {
+    "name": "pair",
+    "type": "string",
+    "description": "The cryptocurrency pair to trade, for example, 'BTCUSD', 'USDBTC', 'ETHUSD', etc. The first currency in the pair is the base currency, and the second currency is the quote currency.",
+    "required": true
+   },
+   {
+    "name": "order_type",
+    "type": "string",
+    "description": "The order type, one of ['limit', 'market']. 'limit' orders are executed at a specified price or better, while 'market' orders are executed at the best available price.",
+    "required": true
+   },
+   {
+    "name": "side",
+    "type": "string",
+    "description": "The side of the trade, one of ['buy', 'sell'].",
+    "required": true
+   },
+   {
+    "name": "quantity",
+    "type": "number",
+    "description": "The quantity of the cryptocurrency to trade.",
+    "required": true
+   },
+   {
+    "name": "price",
+    "type": "number",
+    "description": "The price of the cryptocurrency to trade, optional for market orders.",
+    "required": false
+   }
+  ]
+ },
+ "BinanceWithdraw": {
+  "summary": "Withdraw a specified amount of cryptocurrency or fiat money to a specified destination address or bank account from user's account. The bank account id must be retrieved using the RetrieveAccounts tool.",
+  "parameters": [
+   {
+    "name": "currency",
+    "type": "string",
+    "description": "The currency to withdraw, one of ['USD', 'BTC', 'ETH', etc.].",
+    "required": true
+   },
+   {
+    "name": "amount",
+    "type": "number",
+    "description": "The amount of cryptocurrency to withdraw.",
+    "required": true
+   },
+   {
+    "name": "destination_address",
+    "type": "string",
+    "description": "The suitable blockchain address for withdrawing the cryptocurrency, which must be a complete and valid legacy Bitcoin address or SegWit address.",
+    "required": false
+   },
+   {
+    "name": "to_account_id",
+    "type": "string",
+    "description": "The user's saved bank account id to withdraw fiat money to.",
+    "required": false
+   }
+  ]
+ },
+ "CiscoUmbrellaCreatePolicy": {
+  "summary": "Create a new security policy.",
+  "parameters": [
+   {
+    "name": "policy_name",
+    "type": "string",
+    "description": "The name of the policy.",
+    "required": true
+   },
+   {
+    "name": "policy_description",
+    "type": "string",
+    "description": "A brief description of the policy.",
+    "required": true
+   },
+   {
+    "name": "policy_type",
+    "type": "string",
+    "description": "The type of the policy. One of ['whitelist', 'blacklist'].",
+    "required": true
+   },
+   {
+    "name": "domains",
+    "type": "array",
+    "description": "An array of strings, each string is a domain to be added to the policy.",
+    "required": true
+   }
+  ]
+ },
+ "CiscoUmbrellaUpdatePolicy": {
+  "summary": "Update an existing security policy.",
+  "parameters": [
+   {
+    "name": "policy_id",
+    "type": "string",
+    "description": "The unique identifier of the policy to be updated.",
+    "required": true
+   },
+   {
+    "name": "policy_name",
+    "type": "string",
+    "description": "The new name of the policy.",
+    "required": false
+   },
+   {
+    "name": "policy_description",
+    "type": "string",
+    "description": "The new description of the policy.",
+    "required": false
+   },
+   {
+    "name": "policy_type",
+    "type": "string",
+    "description": "The new type of the policy. One of ['whitelist', 'blacklist'].",
+    "required": false
+   },
+   {
+    "name": "domains",
+    "type": "array",
+    "description": "An array of strings, each string is a domain to be added to the policy.",
+    "required": false
+   }
+  ]
+ },
+ "DropboxMoveItem": {
+  "summary": "Move a file or folder to a different folder in the user's Dropbox account.",
+  "parameters": [
+   {
+    "name": "item_path",
+    "type": "string",
+    "description": "The cloud file or folder path in the user's Dropbox account to be moved.",
+    "required": true
+   },
+   {
+    "name": "destination_folder_path",
+    "type": "string",
+    "description": "The destination folder path in the user's Dropbox account.",
+    "required": true
+   }
+  ]
+ },
+ "EmergencyDispatchSystemCreateDispatchRequest": {
+  "summary": "Create an active new emergency dispatch request with available resources.",
+  "parameters": [
+   {
+    "name": "incident_location",
+    "type": "string",
+    "description": "The location of the incident in the street address format.",
+    "required": true
+   },
+   {
+    "name": "resource_ids",
+    "type": "array",
+    "description": "List of unique identifiers for the dispatch resources to be dispatched.",
+    "required": true
+   },
+   {
+    "name": "incident_type",
+    "type": "string",
+    "description": "The primary type of the incident, one of ['Fire', 'Medical', 'Police'].",
+    "required": true
+   },
+   {
+    "name": "incident_severity",
+    "type": "string",
+    "description": "The severity of the incident, one of ['Low', 'Medium', 'High'].",
+    "required": true
+   },
+   {
+    "name": "incident_description",
+    "type": "string",
+    "description": "A brief description of the incident.",
+    "required": true
+   }
+  ]
+ },
+ "EpicFHIRManageAppointments": {
+  "summary": "List, access, create, update, and delete patient appointments.",
+  "parameters": [
+   {
+    "name": "patient_id",
+    "type": "string",
+    "description": "The unique identifier of the patient. The identifier should be a string of alphanumeric characters.",
+    "required": true
+   },
+   {
+    "name": "action",
+    "type": "string",
+    "description": "The action to perform on the appointment. The value should be one of ['list', 'create', 'update', 'delete'].",
+    "required": true
+   },
+   {
+    "name": "appointment_id",
+    "type": "string",
+    "description": "The unique identifier of the appointment, required for update and delete actions.",
+    "required": false
+   },
+   {
+    "name": "appointment_data",
+    "type": "object",
+    "description": "The appointment data, required for create and update actions. The object includes fields such as 'date', 'time', 'location', and 'doctor_id'.",
+    "required": false
+   },
+   {
+    "name": "max_results",
+    "type": "integer",
+    "description": "The maximum number of results to return for the list action, default is 10.",
+    "required": false
+   }
+  ]
+ },
+ "EpicFHIRManageClinicalDocuments": {
+  "summary": "List, create, update, and delete clinical documents, such as discharge summaries and progress notes.",
+  "parameters": [
+   {
+    "name": "patient_id",
+    "type": "string",
+    "description": "The unique identifier of the patient. The identifier should be a string of alphanumeric characters.",
+    "required": true
+   },
+   {
+    "name": "action",
+    "type": "string",
+    "description": "The action to perform on the clinical document. The value should be one of ['list', 'create', 'update', 'delete'].",
+    "required": true
+   },
+   {
+    "name": "document_id",
+    "type": "string",
+    "description": "The unique identifier of the clinical document, required for update and delete actions.",
+    "required": false
+   },
+   {
+    "name": "document_data",
+    "type": "object",
+    "description": "The clinical document data, required for create and update actions. The object includes fields such as 'type', 'date', 'summary', and 'details'.",
+    "required": false
+   },
+   {
+    "name": "max_results",
+    "type": "integer",
+    "description": "The maximum number of results to return for the list action, default is 10.",
+    "required": false
+   }
+  ]
+ },
+ "EpicFHIRManagePatientRecords": {
+  "summary": "List, create, update, and delete patient records.",
+  "parameters": [
+   {
+    "name": "patient_id",
+    "type": "string",
+    "description": "The unique identifier of the patient. The identifier should be a string of alphanumeric characters.",
+    "required": true
+   },
+   {
+    "name": "action",
+    "type": "string",
+    "description": "The action to perform on the patient record. The value should be one of ['list', 'create', 'update', 'delete'].",
+    "required": true
+   },
+   {
+    "name": "record_data",
+    "type": "object",
+    "description": "The patient record data, required for create and update actions. The object includes fields such as 'name', 'age', 'gender', 'medications', 'allergies', and 'conditions'.",
+    "required": false
+   },
+   {
+    "name": "max_results",
+    "type": "integer",
+    "description": "The maximum number of results to return for the list action, default is 10.",
+    "required": false
+   }
+  ]
+ },
+ "EvernoteManagerManageNoteSharingLevel": {
+  "summary": "Alter the note-sharing permissions for a specific user identified by their email address.",
+  "parameters": [
+   {
+    "name": "note_id",
+    "type": "string",
+    "description": "The unique identifier of the note that the permissions will be changed for.",
+    "required": true
+   },
+   {
+    "name": "email",
+    "type": "string",
+    "description": "The email address of the user whose note-sharing permissions will be altered.",
+    "required": true
+   },
+   {
+    "name": "level",
+    "type": "string",
+    "description": "The level of sharing, can be 'not_accessible', 'read_only', or 'can_edit'.",
+    "required": true
+   }
+  ]
+ },
+ "EvernoteManagerSearchNotes": {
+  "summary": "Search for notes by keywords, tags, or notebook ID.",
+  "parameters": [
+   {
+    "name": "keywords",
+    "type": "array",
+    "description": "A list of keywords to search for in the note title or content (optional).",
+    "required": false
+   },
+   {
+    "name": "tags",
+    "type": "array",
+    "description": "A list of tags to search for in the note tags (optional).",
+    "required": false
+   },
+   {
+    "name": "notebook_id",
+    "type": "string",
+    "description": "The unique identifier of the notebook to search within (optional).",
+    "required": false
+   },
+   {
+    "name": "max_results",
+    "type": "integer",
+    "description": "The maximum number of results to return (optional, default: 10).",
+    "required": false
+   }
+  ]
+ },
+ "FacebookManagerUpdateUserProfile": {
+  "summary": "Update the user's profile information.",
+  "parameters": [
+   {
+    "name": "updates",
+    "type": "object",
+    "description": "The profile information to update, containing fields such as name, email, birthday, and location.",
+    "required": true
+   }
+  ]
+ },
+ "FedExShipManagerManageShipment": {
+  "summary": "Manages shipments, including redirecting, rescheduling pickup, returning to sender, and cancelling.",
+  "parameters": [
+   {
+    "name": "shipment_id",
+    "type": "string",
+    "description": "The unique identifier of the shipment.",
+    "required": true
+   },
+   {
+    "name": "operation",
+    "type": "string",
+    "description": "The operation to be performed, can only be one of ['cancel', 'reschedule_pickup', 'redirect', 'return_to_sender']. 'cancel' and 'reschedule_pickup' operations can only be performed when the status of the shipment is 'pending'. 'redirect' and 'return_to_sender' operations can only be performed when the status of the shipment is 'in_transit'.",
+    "required": true
+   },
+   {
+    "name": "new_receipient_information",
+    "type": "object",
+    "description": "The new recipient information, including full name, address and contact number, required for redirect operation.",
+    "required": false
+   },
+   {
+    "name": "new_pickup_time",
+    "type": "string",
+    "description": "The new pickup time, required for reschedule operation, with format 'YYYY-MM-DD:HH:MM:SS'.",
+    "required": false
+   }
+  ]
+ },
+ "GitHubDeleteRepository": {
+  "summary": "Delete a user owned repository. Only valid if the user owns the repository.",
+  "parameters": [
+   {
+    "name": "repo_id",
+    "type": "string",
+    "description": "The unique identifier of the repository.",
+    "required": true
+   }
+  ]
+ },
+ "GitHubGetRepositoryDetails": {
+  "summary": "Retrieve repository details, including issues, branches.",
+  "parameters": [
+   {
+    "name": "repo_id",
+    "type": "string",
+    "description": "The unique identifier of the repository.",
+    "required": true
+   }
+  ]
+ },
+ "GitHubGetUserDetails": {
+  "summary": "Retrieve user details.",
+  "parameters": [
+   {
+    "name": "username",
+    "type": "string",
+    "description": "The username of the user.",
+    "required": true
+   }
+  ]
+ },
+ "GitHubSearchRepositories": {
+  "summary": "Search for repositories by keywords and scope. The user can search all repositories on Github, owned repositories, or member repositories. When the keywords are not provided, the user can search for all repositories in the specified scope.",
+  "parameters": [
+   {
+    "name": "keywords",
+    "type": "string",
+    "description": "The keywords to search for in the repositories. Default is search for all repositories in the specified scope.",
+    "required": false
+   },
+   {
+    "name": "search_scope",
+    "type": "string",
+    "description": "The scope of the search. Can be 'all' (all repositories on Github), 'owned' (only repositories the user owns), 'member' (only repositories where the user is a collaborator on). Default is 'all'.",
+    "required": false
+   },
+   {
+    "name": "max_results",
+    "type": "integer",
+    "description": "The maximum number of results to return. Default is 5, maximum is 10.",
+    "required": false
+   }
+  ]
+ },
+ "GmailReadEmail": {
+  "summary": "Read the content of an email, including attachments.",
+  "parameters": [
+   {
+    "name": "email_id",
+    "type": "string",
+    "description": "The unique identifier of the email.",
+    "required": true
+   }
+  ]
+ },
+ "GmailSearchEmails": {
+  "summary": "Search for emails based on keywords, folders, labels, date range, or sender and recipient. If certain arguments are not provided, the corresponding filters are not applied.",
+  "parameters": [
+   {
+    "name": "keywords",
+    "type": "array",
+    "description": "The list of keywords to search for.",
+    "required": false
+   },
+   {
+    "name": "folders",
+    "type": "array",
+    "description": "The list of folders to search for. Each value should be a valid folder such as 'inbox', 'sent', 'drafts', or 'spam'.",
+    "required": false
+   },
+   {
+    "name": "limit",
+    "type": "integer",
+    "description": "The maximum number of emails to retrieve. Default is 5.",
+    "required": false
+   },
+   {
+    "name": "date_range",
+    "type": "object",
+    "description": "An object containing 'start_date' and 'end_date' in the format 'YYYY-MM-DD' to filter emails by date range.",
+    "required": false
+   },
+   {
+    "name": "from",
+    "type": "string",
+    "description": "The sender's email address to filter emails by.",
+    "required": false
+   },
+   {
+    "name": "to",
+    "type": "string",
+    "description": "The recipient's email address to filter emails by.",
+    "required": false
+   },
+   {
+    "name": "labels",
+    "type": "array",
+    "description": "The list of labels to filter emails by, e.g. 'important'.",
+    "required": false
+   }
+  ]
+ },
+ "GoogleCalendarGetEventsFromSharedCalendar": {
+  "summary": "Get events from other users' shared calendar.",
+  "parameters": [
+   {
+    "name": "email",
+    "type": "string",
+    "description": "The email of the user who shared the calendar.",
+    "required": true
+   },
+   {
+    "name": "start_date",
+    "type": "string",
+    "description": "The start date to retrieve events in ISO 8601 format.",
+    "required": true
+   },
+   {
+    "name": "end_date",
+    "type": "string",
+    "description": "The end date to retrieve events in ISO 8601 format.",
+    "required": true
+   }
+  ]
+ },
+ "GoogleCalendarReadEvents": {
+  "summary": "Read events by event_ids.",
+  "parameters": [
+   {
+    "name": "event_ids",
+    "type": "array",
+    "description": "An array of unique event identifiers to read events.",
+    "required": true
+   }
+  ]
+ },
+ "GoogleHomeScheduleDeviceAction": {
+  "summary": "Schedules a specified smart home device to perform an action at a specified date and time.",
+  "parameters": [
+   {
+    "name": "device_id",
+    "type": "string",
+    "description": "The unique identifier of the smart home device to schedule.",
+    "required": true
+   },
+   {
+    "name": "action",
+    "type": "string",
+    "description": "The action to perform on the device. Must match the actions returned by 'ListDeviceActions' for the specified device.",
+    "required": true
+   },
+   {
+    "name": "date_time",
+    "type": "string",
+    "description": "The scheduled date and time for the action, in the format 'YYYY-MM-DD HH:MM'.",
+    "required": true
+   },
+   {
+    "name": "parameters",
+    "type": "object",
+    "description": "Additional parameters for the action. Must match the parameters returned by 'ListDeviceActions' for the specified device.",
+    "required": false
+   }
+  ]
+ },
+ "IndoorRobotGoToRoom": {
+  "summary": "Let the robot safely move to a specified room based on the room's unique identifier. If the robot cannot move to the specified room safely, it will return a message indicating the reason why it cannot move to the specified room safely.",
+  "parameters": [
+   {
+    "name": "room_id",
+    "type": "string",
+    "description": "The unique identifier of the room to which the robot should move.",
+    "required": true
+   }
+  ]
+ },
+ "NortonIdentitySafeAutoFillPersonalInfo": {
+  "summary": "Auto-fill personal information on a specified website.",
+  "parameters": [
+   {
+    "name": "website",
+    "type": "string",
+    "description": "The website to auto-fill the personal information on.",
+    "required": true
+   },
+   {
+    "name": "info_type",
+    "type": "string",
+    "description": "The type of personal information, must be one of ['address', 'payment'].",
+    "required": true
+   }
+  ]
+ },
+ "NortonIdentitySafeDisableTwoFactorAuthentication": {
+  "summary": "Disable two-factor authentication.",
+  "parameters": []
+ },
+ "NortonIdentitySafeSharePassword": {
+  "summary": "Share a stored password securely with a trusted contact.",
+  "parameters": [
+   {
+    "name": "website",
+    "type": "string",
+    "description": "The website associated with the password to share.",
+    "required": true
+   },
+   {
+    "name": "username",
+    "type": "string",
+    "description": "The username associated with the password to share.",
+    "required": true
+   },
+   {
+    "name": "contact_email",
+    "type": "string",
+    "description": "The email address of the trusted contact.",
+    "required": true
+   }
+  ]
+ },
+ "ShopifyGetProductDetails": {
+  "summary": "Retrieve product details by the product ID.",
+  "parameters": [
+   {
+    "name": "product_id",
+    "type": "string",
+    "description": "Unique identifier of the product.",
+    "required": true
+   }
+  ]
+ },
+ "SlackLeaveChannel": {
+  "summary": "Leave a channel.",
+  "parameters": [
+   {
+    "name": "channel_name",
+    "type": "string",
+    "description": "The name of the channel, must start with '#'.",
+    "required": true
+   }
+  ]
+ },
+ "TeladocViewReviews": {
+  "summary": "View reviews for a doctor by providing the doctor's unique identifier.",
+  "parameters": [
+   {
+    "name": "doctor_id",
+    "type": "string",
+    "description": "The unique identifier of the chosen doctor.",
+    "required": true
+   }
+  ]
+ },
+ "TerminalExecute": {
+  "summary": "Execute a terminal command and return the output. This command should follow proper syntax and be supported by the terminal environment.",
+  "parameters": [
+   {
+    "name": "command",
+    "type": "string",
+    "description": "The command to execute in the terminal.",
+    "required": true
+   }
+  ]
+ },
+ "The23andMeShareData": {
+  "summary": "Shares the user's genetic data with a third-party application.",
+  "parameters": [
+   {
+    "name": "app_id",
+    "type": "string",
+    "description": "The identifier of the third-party application. The 'app_id' should be a valid identifier of a registered third-party application.",
+    "required": true
+   }
+  ]
+ },
+ "The23andMeUpdateData": {
+  "summary": "Updates the user's genetic data.",
+  "parameters": [
+   {
+    "name": "new_data",
+    "type": "object",
+    "description": "The new genetic data for the user. The object includes fields 'ancestry', 'traits', 'health_predispositions', and 'carrier_status'.",
+    "required": true
+   }
+  ]
+ },
+ "TodoistSearchTasks": {
+  "summary": "Searches tasks by keywords, due date, and priority.",
+  "parameters": [
+   {
+    "name": "keywords",
+    "type": "string",
+    "description": "The keywords to search in the task name and description.",
+    "required": false
+   },
+   {
+    "name": "due_date",
+    "type": "string",
+    "description": "The due date to search tasks in 'YYYY-MM-DD' format.",
+    "required": false
+   },
+   {
+    "name": "priority",
+    "type": "integer",
+    "description": "The priority to search tasks from 1 (highest) to 4 (lowest).",
+    "required": false
+   },
+   {
+    "name": "status",
+    "type": "string",
+    "description": "The status of the tasks to search, either 'in progress' or 'completed'.",
+    "required": false
+   },
+   {
+    "name": "max_results",
+    "type": "integer",
+    "description": "The maximum number of results to return. Default value is 10.",
+    "required": false
+   }
+  ]
+ },
+ "TrafficControlGivePriorityToEmergencyVehicle": {
+  "summary": "Gives priority to an emergency vehicle by changing vehicle lights at specific intersections.",
+  "parameters": [
+   {
+    "name": "intersection_ids",
+    "type": "array",
+    "description": "The unique identifiers of the intersections where priority should be given.",
+    "required": true
+   },
+   {
+    "name": "start_time",
+    "type": "string",
+    "description": "The start time of the priority period in the format 'yyyy-mm-dd hh:mm:ss'.",
+    "required": true
+   },
+   {
+    "name": "end_time",
+    "type": "string",
+    "description": "The end time of the priority period in the format 'yyyy-mm-dd hh:mm:ss'.",
+    "required": true
+   }
+  ]
+ },
+ "TrafficControlManageTrafficLightState": {
+  "summary": "Changes the state of a traffic light at a specific intersection, either immediately, or at a scheduled time.",
+  "parameters": [
+   {
+    "name": "intersection_id",
+    "type": "string",
+    "description": "The unique identifier of the intersection where the traffic light is located.",
+    "required": true
+   },
+   {
+    "name": "traffic_light_id",
+    "type": "string",
+    "description": "The unique identifier of the traffic light to change concatenated by the type and the direction, e.g., 'vehicle-north-south'. The type can be 'vehicle' or 'pedestrian'. Typically there will be two lights per intersection: 'north-south' for the north-south direction and 'east-west' for the east-west direction.",
+    "required": true
+   },
+   {
+    "name": "traffic_light_state",
+    "type": "string",
+    "description": "The new state of the traffic light, for 'vehicle' lights, can be 'red', 'green', 'yellow', or 'hazard'; for 'pedestrian' lights, can be 'walk', 'stop', or 'flashing'.",
+    "required": true
+   },
+   {
+    "name": "start_time",
+    "type": "string",
+    "description": "The start time of the command in the format 'yyyy-mm-dd hh:mm:ss'. If not provided, the command takes effect immediately.",
+    "required": false
+   },
+   {
+    "name": "end_time",
+    "type": "string",
+    "description": "The end time of the command in the format 'yyyy-mm-dd hh:mm:ss'.",
+    "required": false
+   }
+  ]
+ },
+ "TwilioGetReceivedSmsMessages": {
+  "summary": "Retrieve the history of received SMS messages.",
+  "parameters": [
+   {
+    "name": "from_phone_number",
+    "type": "string",
+    "description": "The phone number in E.164 format to retrieve the history for. If not specified, the history for all phone numbers will be retrieved.",
+    "required": false
+   },
+   {
+    "name": "datetime_range",
+    "type": "array",
+    "description": "A list of two timestamps in the format 'YYYY-MM-DD HH:mm:ss' to retrieve the history between. If not specified, the history for all timestamps will be retrieved.",
+    "required": false
+   },
+   {
+    "name": "keywords",
+    "type": "string",
+    "description": "The comma-separated keywords to search for in the message content. If not specified, no keyword filtering will be performed.",
+    "required": false
+   },
+   {
+    "name": "max_results",
+    "type": "integer",
+    "description": "The maximum number of results to retrieve. Optional.",
+    "required": false
+   }
+  ]
+ },
+ "TwitterManagerGetUserProfile": {
+  "summary": "Retrieve the user's own profile or another user's profile information by their ID.",
+  "parameters": [
+   {
+    "name": "user_id",
+    "type": "string",
+    "description": "The unique identifier of the user to retrieve the profile information for. If not provided, return own profile.",
+    "required": false
+   }
+  ]
+ },
+ "TwitterManagerReadTweet": {
+  "summary": "Read the content of a specific tweet by its ID.",
+  "parameters": [
+   {
+    "name": "tweet_id",
+    "type": "string",
+    "description": "The unique identifier of the tweet to read.",
+    "required": true
+   }
+  ]
+ },
+ "TwitterManagerSearchTweets": {
+  "summary": "Search for user's own tweets or public tweets containing specific keywords or hashtags.",
+  "parameters": [
+   {
+    "name": "query",
+    "type": "string",
+    "description": "The query string to search for in tweets.",
+    "required": true
+   },
+   {
+    "name": "max_results",
+    "type": "integer",
+    "description": "The maximum number of results to return, default is 10.",
+    "required": false
+   },
+   {
+    "name": "own_tweets",
+    "type": "boolean",
+    "description": "Whether to search only the user's own tweets, default is false.",
+    "required": false
+   }
+  ]
+ },
+ "VenmoWithdrawMoney": {
+  "summary": "Withdraw money from the user's Venmo balance to a linked bank account.",
+  "parameters": [
+   {
+    "name": "amount",
+    "type": "number",
+    "description": "The amount of money to withdraw, must be positive.",
+    "required": true
+   },
+   {
+    "name": "account_id",
+    "type": "string",
+    "description": "The unique identifier of the linked bank account.",
+    "required": true
+   }
+  ]
+ },
+ "WebBrowserNavigateTo": {
+  "summary": "Navigates to a specified URL.",
+  "parameters": [
+   {
+    "name": "url",
+    "type": "string",
+    "description": "The URL to navigate to.",
+    "required": true
+   }
+  ]
+ }
+}

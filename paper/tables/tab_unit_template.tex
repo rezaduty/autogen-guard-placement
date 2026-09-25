@@ -1,0 +1,12 @@
+\begin{tabular}{lrrrr}
+\toprule
+ & \multicolumn{2}{c}{DeBERTa} & \multicolumn{2}{c}{LLM guard} \\
+template & probe & passage & probe & passage \\
+\midrule
+direct & 0/10 & 5/10 & 10/10 & 0/10 \\
+system\_message & 0/10 & 10/10 & 10/10 & 0/10 \\
+ignore\_previous & 4/10 & 10/10 & 10/10 & 10/10 \\
+injecagent & 4/10 & 10/10 & 10/10 & 9/10 \\
+important\_instructions & 0/10 & 10/10 & 10/10 & 10/10 \\
+\bottomrule
+\end{tabular}

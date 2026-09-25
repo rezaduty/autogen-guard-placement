@@ -1,0 +1,209 @@
+{
+ "deberta|text|attack": [
+  8,
+  50
+ ],
+ "deberta|text|matched": [
+  0,
+  50
+ ],
+ "deberta|text|hn_imperative": [
+  0,
+  17
+ ],
+ "deberta|text|hn_vocab": [
+  0,
+  17
+ ],
+ "deberta|text|hn_identifier": [
+  0,
+  16
+ ],
+ "deberta|text|benign": [
+  0,
+  100
+ ],
+ "deberta|passage|attack": [
+  45,
+  50
+ ],
+ "deberta|passage|matched": [
+  1,
+  50
+ ],
+ "deberta|passage|hn_imperative": [
+  0,
+  17
+ ],
+ "deberta|passage|hn_vocab": [
+  4,
+  17
+ ],
+ "deberta|passage|hn_identifier": [
+  0,
+  16
+ ],
+ "deberta|passage|benign": [
+  5,
+  100
+ ],
+ "llm|text|attack": [
+  50,
+  50
+ ],
+ "llm|text|matched": [
+  0,
+  50
+ ],
+ "llm|text|hn_imperative": [
+  1,
+  17
+ ],
+ "llm|text|hn_vocab": [
+  3,
+  17
+ ],
+ "llm|text|hn_identifier": [
+  0,
+  16
+ ],
+ "llm|text|benign": [
+  4,
+  100
+ ],
+ "llm|passage|attack": [
+  29,
+  50
+ ],
+ "llm|passage|matched": [
+  0,
+  50
+ ],
+ "llm|passage|hn_imperative": [
+  0,
+  17
+ ],
+ "llm|passage|hn_vocab": [
+  0,
+  17
+ ],
+ "llm|passage|hn_identifier": [
+  0,
+  16
+ ],
+ "llm|passage|benign": [
+  0,
+  100
+ ],
+ "llm27|text|attack": [
+  50,
+  50
+ ],
+ "llm27|text|matched": [
+  0,
+  50
+ ],
+ "llm27|text|hn_imperative": [
+  3,
+  17
+ ],
+ "llm27|text|hn_vocab": [
+  8,
+  17
+ ],
+ "llm27|text|hn_identifier": [
+  4,
+  16
+ ],
+ "llm27|text|benign": [
+  15,
+  100
+ ],
+ "llm27|passage|attack": [
+  50,
+  50
+ ],
+ "llm27|passage|matched": [
+  0,
+  50
+ ],
+ "llm27|passage|hn_imperative": [
+  0,
+  17
+ ],
+ "llm27|passage|hn_vocab": [
+  0,
+  17
+ ],
+ "llm27|passage|hn_identifier": [
+  0,
+  16
+ ],
+ "llm27|passage|benign": [
+  0,
+  100
+ ],
+ "wb zero shot|text|attack": [
+  0,
+  50
+ ],
+ "wb zero shot|text|matched": [
+  0,
+  50
+ ],
+ "wb zero shot|text|hn_imperative": [
+  0,
+  17
+ ],
+ "wb zero shot|text|hn_vocab": [
+  0,
+  17
+ ],
+ "wb zero shot|text|hn_identifier": [
+  0,
+  16
+ ],
+ "wb zero shot|text|benign": [
+  0,
+  100
+ ],
+ "wb zero shot|passage|attack": [
+  17,
+  50
+ ],
+ "wb zero shot|passage|matched": [
+  1,
+  50
+ ],
+ "wb zero shot|passage|hn_imperative": [
+  0,
+  17
+ ],
+ "wb zero shot|passage|hn_vocab": [
+  11,
+  17
+ ],
+ "wb zero shot|passage|hn_identifier": [
+  1,
+  16
+ ],
+ "wb zero shot|passage|benign": [
+  13,
+  100
+ ],
+ "deberta|unit_mcnemar": [
+  0,
+  37,
+  1.455191522836688e-11
+ ],
+ "llm|unit_mcnemar": [
+  21,
+  0,
+  9.536743164062499e-07
+ ],
+ "llm27|unit_mcnemar": [
+  0,
+  0,
+  1.0
+ ]
+}

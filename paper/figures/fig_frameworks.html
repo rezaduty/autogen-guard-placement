@@ -1,0 +1,78 @@
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+  @page{size:1100px 470px;margin:0}
+  body{width:1100px;height:470px;position:relative;background:#fff;color:#1f2733}
+  .zone{position:absolute;border-radius:16px;border:2px dashed #cfd4dc}
+  .zlab{position:absolute;font-size:15px;letter-spacing:2px;text-transform:uppercase;
+        color:#8a93a2;font-weight:bold}
+  .box{position:absolute;border-radius:12px;overflow:hidden;
+       box-shadow:0 1px 3px rgba(20,28,43,.10);
+       padding:8px 10px;display:flex;flex-direction:column;align-items:center;
+       justify-content:center;text-align:center}
+  .t{font-size:18px;font-weight:bold;line-height:1.2}
+  .s{font-size:15px;color:#6b7280;line-height:1.25;margin-top:3px;font-family:Menlo,Consolas,monospace}
+  .row{background:#f6f7f9;border:2px solid #d9dde4}
+  .intime{background:#e9f5ef;border:2px solid #2f7d68}
+  .late{background:#fff7eb;border:2px solid #d97706}
+  .leg{position:absolute;font-size:15px;color:#6b7280;line-height:1.3}
+</style>
+
+<div class="zone" style="left:12px;top:40px;width:1076px;height:370px"></div>
+<div class="zlab" style="left:230px;top:52px">AutoGen</div>
+<div class="zlab" style="left:514px;top:52px">LangGraph</div>
+<div class="zlab" style="left:808px;top:52px">CrewAI</div>
+
+<div class="box row" style="left:26px;top:84px;width:176px;height:92px">
+  <div class="t">Model input</div>
+</div>
+<div class="box intime" style="left:218px;top:84px;width:276px;height:92px">
+  <div class="t">Client wrapper</div>
+  <div class="s">ChatCompletionClient</div>
+</div>
+<div class="box intime" style="left:510px;top:84px;width:276px;height:92px">
+  <div class="t">Agent middleware</div>
+  <div class="s">before_model</div>
+</div>
+<div class="box intime" style="left:802px;top:84px;width:272px;height:92px">
+  <div class="t">Global hook</div>
+  <div class="s">before_llm_call</div>
+</div>
+
+<div class="box row" style="left:26px;top:192px;width:176px;height:92px">
+  <div class="t">Tool result</div>
+</div>
+<div class="box intime" style="left:218px;top:192px;width:276px;height:92px">
+  <div class="t">Tool wrapper</div>
+  <div class="s">FunctionTool</div>
+</div>
+<div class="box intime" style="left:510px;top:192px;width:276px;height:92px">
+  <div class="t">Agent middleware</div>
+  <div class="s">wrap_tool_call</div>
+</div>
+<div class="box intime" style="left:802px;top:192px;width:272px;height:92px">
+  <div class="t">Global hook</div>
+  <div class="s">after_tool_call</div>
+</div>
+
+<div class="box row" style="left:26px;top:300px;width:176px;height:96px">
+  <div class="t">Between agents</div>
+</div>
+<div class="box late" style="left:218px;top:300px;width:276px;height:96px">
+  <div class="t">Runtime handler</div>
+  <div class="s">InterventionHandler</div>
+</div>
+<div class="box late" style="left:510px;top:300px;width:276px;height:96px">
+  <div class="t">Graph node</div>
+  <div class="s">StateGraph edge</div>
+</div>
+<div class="box late" style="left:802px;top:300px;width:272px;height:96px">
+  <div class="t">Task guardrail</div>
+  <div class="s">Task(guardrail=)</div>
+</div>
+
+<div class="leg" style="left:16px;top:424px;width:1070px">
+  <svg width="40" height="12"><rect x="1" y="1" width="36" height="10" rx="3" fill="#e9f5ef" stroke="#2f7d68" stroke-width="2"/></svg>
+  sees the injected text before the agent reads it
+  <svg width="40" height="12" style="margin-left:18px"><rect x="1" y="1" width="36" height="10" rx="3" fill="#fff7eb" stroke="#d97706" stroke-width="2"/></svg>
+  sees tool results after the agent read them, the agent's reply in time for the next agent
+</div>

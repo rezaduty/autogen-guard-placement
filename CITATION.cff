@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this artifact, please cite the paper below."
+title: "Guard Placement and Interception Timing for Runtime Risk Control in AutoGen Multi-Agent Teams"
+keywords:
+  - prompt injection
+  - multi-agent systems
+  - AutoGen
+  - guardrails
+  - defense placement

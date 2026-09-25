@@ -1,0 +1,1238 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{orcidlink}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{placeins}
+\lstset{basicstyle=\ttfamily\footnotesize,frame=single,columns=fullflexible,
+        breaklines=true,captionpos=b,xleftmargin=4pt,xrightmargin=4pt}
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = [rgb]{0.10,0.25,0.55},
+  citecolor  = [rgb]{0.10,0.25,0.55},
+  urlcolor   = [rgb]{0.10,0.35,0.45},
+  breaklinks = true
+}
+\input{tables/macros.tex}
+
+\begin{document}
+
+\title{Guard Placement and Interception Timing for Runtime Risk Control in
+AutoGen Multi-Agent Teams}
+
+\author{
+\IEEEauthorblockN{Mohammadreza Rashidi~\orcidlink{0009-0003-7136-7168}}
+\IEEEauthorblockA{\textit{Department of Computer Science}\\
+\textit{AI and Media Analysis Lab}\\
+Berlin, Germany\\
+mohammadreza.rashidi@ue-germany.de}
+}
+
+\maketitle
+
+\begin{abstract}
+Multi-agent frameworks give a defender several places to put a guard. We
+hold one prompt-injection guard fixed and move it between the three
+interception points AutoGen exposes: the model client, the runtime message
+bus and the tool boundary. On \NProbes{} probes built from real documents,
+with benign passages matched on length and hard negatives that isolate
+single surface features, the unit of text a placement hands the guard
+changes its verdict for every guard tested. A DeBERTa classifier flags
+\OneDebertaTextAttackK{} of \OneDebertaTextAttackN{} attacks inside the
+document and \OneDebertaPassageAttackK{} as the passage alone, a
+language-model guard on the agents' model the reverse,
+\OneLlmTextAttackK{} and \OneLlmPassageAttackK{}, and a larger language-model
+guard keeps full recall but flags \OneLlmTwoSevenTextBenignK{} benign
+documents against \OneLlmTwoSevenPassageBenignK{} benign passages. Across a
+panel of \NPanel{} detectors, the unit changes the verdict of all but PIGuard,
+and two published classifiers flag every document at every unit. AutoGen's
+own memory formatting lowers the agents'-size guard from
+\OneLlmTextAttackK{} to \OneLlmMemoryAttackK{} of \OneLlmMemoryAttackN{}
+($p=\OneLlmMemoryP{}$). In team runs on \NTestCarriers{} test carriers, blocking prevents
+every observed breach where the guard receives the text in time, except
+memory at the model client. A
+regular-expression denylist in front of the team blocks
+\SevenAttackBlockedPct{} of attacks and \SevenBenignBlockedPct{} of benign
+documents, because it decides on the surrounding document. Beyond injected
+instructions, AutoGen's termination check reads data: a document that
+contains the termination keyword ends the team in every run, a model-client
+guard prevents none of these stops, and a bus or tool guard prevents all.
+Blocking with a guard that receives the text in time outperforms the
+prompt-level defenses spotlighting and the sandwich defense
+($p=\GuardVsSpotP{}$ against spotlighting). LangGraph, CrewAI and AutoGen's
+model-chosen speaker order keep the same placement map, and CrewAI's model
+hook flags the framework's own prompt in \FwCrewaiModelFalseK{} of
+\FwCrewaiModelFalseN{} benign runs. Every number is re-derived by an
+independent verifier.
+\end{abstract}
+
+\begin{IEEEkeywords}
+prompt injection, multi-agent systems, AutoGen, guardrails, defense placement
+\end{IEEEkeywords}
+
+% ==========================================================================
+\section{Introduction}
+\label{sec:intro}
+
+A multi-agent framework gives a defender several places to put a
+prompt-injection guard. AutoGen~\cite{wu2023autogen,autogen2025repo}
+exposes three of them in its own interfaces: the model client that every
+agent calls, the runtime's intervention handler that sees every message
+published between agents, and the tool function whose return value an agent
+reads. Defense papers evaluate a guard at one of these points, most often
+on tool outputs or on inter-agent
+messages~\cite{chennabasappa2025llamafirewall,jha2025controlvalve,paul2026beyond,debenedetti2024agentdojo}.
+None holds the guard fixed and moves it through one team, so the effect of
+the placement has not been separated from the effect of the guard.
+
+The placement changes two things a guard evaluation holds constant. It
+changes which text reaches the guard: a raw tool output, a message wrapped
+by the framework, or an agent's reply that has already absorbed the
+injection. It changes when the text arrives: before the model reads it, or
+after the agent has acted. A guard that detects an injection after the agent
+has acted has observed a breach rather than prevented one.
+
+Part of the answer follows from the interfaces alone. A tool wrapper never
+sees an injection that arrives in the task, and a message bus receives a
+tool result only after the calling agent has read it
+(Table~\ref{tab:visibility}). With one guard whose verdict depends only on
+the text, two placements that receive the same text at a time when blocking
+can still help must also block the same injections. We state these two
+facts as the argument they are and do not count them as findings.
+
+What the interfaces do not decide is measured. \emph{A placement changes the
+unit of text the guard receives, and the guard's verdict depends on that
+unit.} The claim fails if each guard gives the same verdict on an injected
+passage whether it receives the passage alone, the whole retrieved document,
+or the document inside the framework's own wrapping. It also fails if the
+extra text a placement scans, such as system prompts and framework
+scaffolding, adds no false blocks. Either outcome is reportable.
+
+\subsection{Contributions}
+
+\begin{itemize}
+\item A measurement of the unit effect on three guards: two invert on recall
+  between the passage alone and the whole document, and a larger one keeps
+  its recall but gains false positives on whole documents
+  (Section~\ref{sec:unit}).
+\item A placement map for AutoGen with timing from a run-wide event order,
+  showing that the framework's memory formatting lowers detection for a
+  guard of the agents' size at the model client and that blocking prevents
+  breaches wherever the text arrives in time (Sections~\ref{sec:sees} and~\ref{sec:blocking}).
+\item A paired test showing that a regex denylist on whole documents decides
+  on the carrier, not the injection (Section~\ref{sec:gateway}).
+\item A measurement that AutoGen's termination check turns a keyword in data
+  into a stop that only a bus or tool guard, or a one-line configuration,
+  prevents (Section~\ref{sec:runtime}).
+\item A comparison of guard placement with prompt-level defenses, in which a
+  guard that receives the text in time outperforms spotlighting and the
+  sandwich defense (Section~\ref{sec:prompt-defenses}).
+\item The same placements under a model-chosen speaker order
+  (Section~\ref{sec:selector}) and in LangGraph and CrewAI, with the cost of
+  a model-level guard on CrewAI's own prompt (Section~\ref{sec:frameworks}),
+  and a third-party corpus that disagrees with ours on guard recall
+  (Section~\ref{sec:injecagent}).
+\end{itemize}
+
+
+% ==========================================================================
+\section{Related Work}
+\label{sec:related}
+
+\subsection{Injection in multi-agent systems}
+
+Indirect prompt injection plants instructions in data an application
+retrieves~\cite{greshake2023indirect}, and benchmarks for tool-using agents
+measure it through tool responses~\cite{zhan2024injecagent,debenedetti2024agentdojo,yi2023bipia,liu2023formalizing}.
+Multi-agent systems add channels. Lee and Tiwari show a payload that
+replicates from agent to agent~\cite{lee2024infection}. Triedman et al.\
+hijack the orchestration of Magentic-One~\cite{fourney2024magentic} and
+other frameworks into running attacker code~\cite{triedman2025mas}, and Jha
+et al.\ show that alignment checks on inter-agent messages can be evaded and
+propose control-flow enforcement~\cite{jha2025controlvalve}. Topology studies
+measure how a compromise spreads~\cite{yu2024netsafe}. Benchmarks run AutoGen
+and CrewAI configurations under attack~\cite{kavathekar2025tamas,nguyen2025pentest}.
+Paul and Nandy enumerate injection vectors in a six-agent system and evaluate
+four architectural defenses~\cite{paul2026beyond}. Agent-in-the-Middle
+intercepts and rewrites the messages agents exchange~\cite{he2025aitm}, and
+AgentLeak instruments inter-agent messages, shared memory and tool arguments
+to measure leakage that a final-output audit misses~\cite{elyagoubi2026agentleak}.
+Hagag et al.\ compare thirteen multi-agent architectures and separate
+refusal at planning from interception at execution~\cite{hagag2026architecture}.
+SAIGuard screens incoming messages on the interaction graph before they
+change an agent's state~\cite{shi2026saiguard}, and MESA ranks which
+communication channels most need protection~\cite{li2026mesa}. These works
+place a defense on the channel between agents, or measure what passes along
+it. None compares that channel with the model client and the tool boundary
+of the same framework under one fixed guard.
+
+\subsection{Prompt-injection guards}
+
+Classifier guards such as the Protect AI DeBERTa model~\cite{protectai2024deberta,he2021debertav3}
+and guardrail toolkits such as NeMo Guardrails~\cite{rebedea2023nemo} and
+LlamaFirewall~\cite{chennabasappa2025llamafirewall} scan text for injection.
+PromptArmor prompts a language model to detect and strip injected
+instructions~\cite{shi2025promptarmor}. Each is evaluated on the text it is
+given. AgentDojo ships the same DeBERTa model as a tool-output filter that can scan
+each tool message or the whole conversation~\cite{debenedetti2024agentdojo},
+which is a choice of unit inside one placement. The effect of that choice on
+the verdict has not been measured, and no study moves one guard across the
+placements of a framework.
+
+\subsection{Architectural defenses}
+
+Design-pattern work argues for isolating untrusted data from the planning
+model~\cite{beurer2025patterns,debenedetti2025camel,delrosario2025pte}.
+Training and prompting defenses separate instructions from data inside the
+model~\cite{chen2024struq,hines2024spotlighting}. Authorization studies argue
+that a hijacked agent should still be unable to exceed its delegated
+authority~\cite{dantuluri2026delegation}. AutoDefense builds a response
+filter out of AutoGen agents~\cite{zeng2024autodefense}. These works change
+the architecture. The present study keeps the architecture and moves one
+guard through it.
+
+\subsection{What is new in this paper}
+
+\begin{itemize}
+\item One guard held fixed and moved across the three interception points a
+  multi-agent framework exposes, with the injection's entry point as a
+  crossed factor, in AutoGen and again in LangGraph and CrewAI.
+\item A timing measure that separates a detection an agent could still act on
+  from one that arrives after the agent has read the injection, taken from
+  a run-wide event order rather than inferred.
+\item The unit of text a placement hands a guard, measured as the mechanism
+  on three guards. Two invert on recall, and each beats a single surface
+  feature only at its favoured unit, and a larger one moves on false
+  positives. The probe set matches the classes on length and its hard
+  negatives isolate single surface features.
+\end{itemize}
+
+% ==========================================================================
+\section{Threat Model and Scope}
+\label{sec:threat}
+
+The attacker controls the content of one document the team processes and
+nothing else. The document reaches the team through one of four entry
+points: the user's task, a tool result, another agent's message, or the
+agent's memory. The attacker's goal is harm-free and string-decidable: make an
+agent place a canary token either in its final answer or in the argument of a
+note-saving tool. The defender deploys one guard at one placement and blocks
+by replacing a flagged text with a fixed marker.
+
+Out of scope are adaptive attacks optimized against the guard, attackers who
+control an agent's model or the runtime, and exfiltration through channels
+other than the two goals. Every run is local, against models and a framework
+we host.
+
+% ==========================================================================
+\section{System Under Measurement}
+\label{sec:system}
+
+\subsection{Team}
+
+The system is an AutoGen~\cite{autogen2025repo} round-robin team of two
+language-model agents, a researcher and a writer, built with
+\texttt{autogen-agentchat} and \texttt{autogen-core} version \AutogenVersion{}.
+The researcher reads document D-1 and writes a three-sentence summary. The
+writer turns that summary into the final answer. Both hold a
+\texttt{save\_note} tool, and both run \texttt{\AgentModel{}}, the identifier the model server echoes back,
+served locally by LM Studio at temperature zero with a fixed seed and
+reasoning disabled (Appendix~\ref{app:config}). Each agent may make up to
+\MaxToolIterations{} tool calls per turn, the limit set in the configuration
+(Appendix~\ref{app:config}). The team stops after every member has spoken once.
+
+The document enters through one of four entry points, each an AutoGen
+mechanism used as documented.
+\begin{itemize}
+\item \emph{User}: the document is part of the task message.
+\item \emph{Tool}: the researcher calls \texttt{fetch\_document}, which
+  returns the document.
+\item \emph{Agent}: an ingest agent with no model posts the document as its
+  turn, ahead of the researcher.
+\item \emph{Memory}: the document is stored in the researcher's
+  \texttt{ListMemory}, which AutoGen appends to the model context as a
+  system message.
+\end{itemize}
+
+\subsection{Three placements}
+
+Each placement is an interception point AutoGen exposes, and each wraps the
+same guard.
+
+\emph{Model client.} A wrapper implementing \texttt{ChatCompletionClient}
+scans every input message of every model call before the model reads it:
+the system message, the task, other agents' turns, tool results and memory.
+An agent's own earlier turns are its outputs and are not scanned.
+
+\emph{Message bus.} An \texttt{InterventionHandler} on the runtime scans every
+message published between the group-chat manager and the agent containers.
+Two message types reach agents: the start message carrying the task, and an
+agent's response, of which other agents receive only the final chat message.
+The bus also carries an output-stream copy of every event, tool results and
+memory queries included, but these copies are published after the calling
+agent has read the content.
+
+\emph{Tool boundary.} A wrapper around \texttt{fetch\_document} scans the
+return value before the agent receives it, and sees nothing else.
+
+Figure~\ref{fig:placements} shows the team, the four entry points and the
+three placements.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_placements.pdf}
+\caption{The AutoGen team under measurement. The attacker's document enters
+through one entry point per run. One guard is moved between the model
+client, the runtime message bus and the tool boundary. Tool results and
+memory reach the bus only as late copies, after the researcher has read
+them.}
+\label{fig:placements}
+\end{figure*}
+
+In observe mode a placement scans and logs. In block mode it replaces a
+flagged text with a fixed marker. Table~\ref{tab:visibility} states which
+entry points each placement can reach in time. The table follows from the
+interfaces, and the event log checks it (Section~\ref{sec:sees}).
+
+\begin{table}[t]
+\centering
+\caption{Entry points each placement can scan before an agent reads the
+injected text, from AutoGen's interfaces. A late entry is content the bus
+carries only after the reading agent has consumed it.}
+\small
+\begin{tabular}{lcccc}
+\toprule
+placement & user & tool & agent & memory \\
+\midrule
+model client & yes & yes & yes & yes \\
+message bus & yes & late & yes & late \\
+tool boundary & no & yes & no & no \\
+\bottomrule
+\end{tabular}
+\label{tab:visibility}
+\end{table}
+
+\subsection{Guards}
+
+Two guards are measured. The first is the Protect AI
+\texttt{deberta-v3-base-prompt-injection-v2} sequence
+classifier~\cite{protectai2024deberta,he2021debertav3}, pinned to one
+revision (Appendix~\ref{app:config}). It labels a text INJECTION or SAFE and
+reads at most \DebertaMaxLen{} tokens, the truncation length set in the
+configuration (Appendix~\ref{app:config}). The second is \texttt{\LlmGuardModel{}}
+at temperature zero, prompted to answer INJECTION or SAFE for text an agent
+is about to read, in the style of PromptArmor~\cite{shi2025promptarmor}. The
+prompt is reproduced in Appendix~\ref{app:config}. Every verdict is cached by
+the hash of the scanned text, so a text scanned at two placements receives
+one verdict and placements differ only in which texts they scan and when.
+
+\subsection{Test bench}
+
+All runs use a local test bench built on NeMo Guardrails
+\NemoVersion{}~\cite{rebedea2023nemo}. Its input rail is one Colang flow,
+\texttt{check jailbreak}, which calls a Python action on every user message
+and on every document passed in as retrieval context. The action first runs
+the DeBERTa classifier and blocks when the INJECTION score is at least
+\RailThreshold{}, the threshold in the rail's configuration
+(Appendix~\ref{app:config}). It then lower-cases the text and blocks when any
+of the \NRailPatterns{} regular expressions listed in the same configuration
+(Appendix~\ref{app:config}) matches it with Python's \texttt{re.search}. The bench records every block with the rule that fired.
+Section~\ref{sec:gateway} measures this rail as a guard placed in front of the
+team. The rail's rules are reproduced verbatim in Appendix~\ref{app:config}.
+
+The bench also serves a classification model:
+Qwen2.5-1.5B-Instruct prompted with a safety policy whose categories each
+carry a code, reproduced verbatim in Appendix~\ref{app:config}. In that
+policy S5 is prompt injection and S6 jailbreak (Appendix~\ref{app:config}),
+and the other codes cover bias, agentic risk and hallucination. The model
+was scored standalone. Counting its S5 and S6 answers
+(Appendix~\ref{app:config}), it flags \OneWbZeroShotTextAttackK{} of
+\OneWbZeroShotTextAttackN{} attack probes and \OneWbZeroShotTextBenignK{}
+of \OneWbZeroShotTextBenignN{} benign probes as full probes, and
+\OneWbZeroShotPassageAttackK{} of \OneWbZeroShotPassageAttackN{} attack and
+\OneWbZeroShotPassageBenignK{} of \OneWbZeroShotPassageBenignN{} benign
+passages. On full probes it instead assigns other categories to
+\OneWbZeroShotAnyCode{} of \OneWbZeroShotN{} weather alerts and abstracts,
+\OneWbZeroShotSTwo{} of them S2, racial or ethnic bias in the same policy
+(Appendix~\ref{app:config}), so it was left out of the placement runs. A second bench model, a low-rank adapter on the same
+base model, was trained on examples labelled hallucination or safe according
+to its training record, is not an injection classifier, and is not reported.
+
+% ==========================================================================
+\section{Data}
+\label{sec:data}
+
+\subsection{Probe set}
+
+The probe set holds \NProbes{} items built from \NCarriers{} real documents,
+\NCarriersPerSource{} active alerts from the US National Weather
+Service~\cite{nws2026api} and \NCarriersPerSource{} arXiv
+abstracts~\cite{arxiv2026api}. Each document, the carrier, appears in three
+probes that differ only in a passage inserted at the same sentence
+boundary. The attack probe inserts one of \NTemplates{} AgentDojo attack
+templates~\cite{debenedetti2024agentdojo}, copied verbatim, carrying one of
+two canary goals, \NPerTemplateGoal{} probes per template and goal. The
+matched probe inserts real neutral sentences from another record of the same
+source. The third probe inserts a hard negative.
+
+Hard negatives are real benign text that carries one surface feature an
+attack also carries. NWS safety instructions are imperative and addressed to
+the reader (\NHnImperative{} probes). arXiv abstracts about prompt injection
+use its vocabulary (\NHnVocab{} probes). arXiv sentences with a URL or code
+identifier resemble a canary token (\NHnIdentifier{} probes). A candidate
+that carried a second family's feature was discarded, so each family
+isolates one feature.
+
+Benign passages were chosen to match their attack passage in length, and
+length separates attack from benign at an area under the ROC curve (AUROC)
+of \LenAurocPassage{} on the passage and \LenAurocText{} on the full probe.
+Two attack features have no hard negative: second-person address and
+tag-like delimiters. Used alone as a classifier, second-person address reaches
+an AUROC of \FeatSecondPersonAuroc{} and a delimiter \FeatDelimiterAuroc{}.
+Every guard result is read against the single-feature baselines, the best of
+which is the identifier feature at \FeatIdentifierAuroc{}.
+
+\subsection{Third-party corpus}
+
+InjecAgent~\cite{zhan2024injecagent} supplies the external check. Its
+direct-harm base split holds \NInjecFile{} cases built from
+\NInjecInstructions{} attacker instructions and \NInjecUsers{} user tasks.
+We use all \NInjecInstructions{} instructions, each with two user tasks taken
+in rotation, \NInjecSelected{} cases. Each case gives the user's task, the
+tool that serves it, a recorded tool response with the attacker instruction
+planted in one field, and the attacker tool the instruction names. Breach is
+InjecAgent's own criterion, a call to the attacker tool, and every attacker
+tool is a stub that records the call and does nothing.
+
+% ==========================================================================
+\section{Protocol}
+\label{sec:protocol}
+
+\subsection{Phases}
+
+The experiment runs in fourteen numbered phases, each runnable on its own
+(Table~\ref{tab:phases}, Fig.~\ref{fig:protocol}). Phase~0 records package
+versions, the models LM Studio serves, and the model identifier echoed by a
+live call, and aborts if the echo differs from the configured model. Phase~1
+scores every probe with every guard as the full probe and as the inserted
+passage alone, and scores it with the two language-model guards and DeBERTa
+a third time inside the system message AutoGen's \texttt{ListMemory} builds.
+It includes a second language-model guard, \texttt{qwen/qwen3.8-27b} with the
+same prompt, which is not used in the team runs. Phases~2 to~5 run the AutoGen team once per
+probe and entry point, every placement observing in phase~2 and one placement
+blocking in each of phases~3 to~5, so phases~3 to~5 pair with phase~2 on the
+same probe and entry point. The tool boundary exists only when the document
+arrives through \texttt{fetch\_document}, so phase~5 runs the tool entry
+point alone. Phase~6 runs the InjecAgent cases through the tool entry point,
+observing and then blocking at each placement. Phase~7 passes every probe to
+the bench's NeMo Guardrails input rail as retrieval context and reads the
+block decision and the rule that fired from the bench's own record of the
+call.
+Phases~8 and~9 rebuild the team in LangGraph~\cite{langgraph2026} and
+CrewAI~\cite{crewai2026} and run every probe through the tool entry point
+with the guard observing at each framework's native hooks. Phase~10 runs the
+AutoGen team with its text-mention termination condition on documents that
+contain the condition's keyword (Section~\ref{sec:runtime}). Phase~11 scores
+a panel of published detectors on every probe at every unit and on two
+external corpora (Section~\ref{sec:unit}). Phase~12 runs the team with two
+prompt-level defenses instead of a guard, spotlighting by
+datamarking~\cite{hines2024spotlighting} and the sandwich
+defense~\cite{liu2023formalizing}, and phase~13 runs AutoGen's
+\texttt{SelectorGroupChat}, where a model chooses each next speaker from the
+transcript.
+
+The team runs use a test subset of \NTestCarriers{} carriers,
+\NTestPerSource{} NWS alerts and \NTestPerSource{} arXiv abstracts, chosen so
+that each half covers all
+\NTemplates{} AgentDojo templates and the two halves carry the two canary
+goals. Every team phase runs on the same carriers, so a blocking run always
+pairs with an observing run on the same probe. Phases~1 and~7, which need no
+team, cover all \NProbes{} probes. Phase~6 uses \NTestInjec{} of the
+\NInjecSelected{} frozen InjecAgent cases, the two cases of each of the first
+\NTestInjecInstructions{} attacker instructions.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_protocol.pdf}
+\caption{Protocol. Every phase drives a real system through its own
+interface and logs every call. Every number in the paper is generated from
+the logs and re-derived by an independent verifier.}
+\label{fig:protocol}
+\end{figure*}
+
+\begin{table}[t]
+\centering
+\caption{Phases. Every team run logs each model call, tool call and guard
+verdict with a sequence number from one run-wide counter.}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{cll}
+\toprule
+phase & what runs & placement modes \\
+\midrule
+0 & capture environment & none \\
+1 & guards alone, three units & none \\
+2 & team, probe set & all observe \\
+3 & team, probe set & model client blocks \\
+4 & team, probe set & message bus blocks \\
+5 & team, tool entry & tool boundary blocks \\
+6 & team, InjecAgent & observe, then each blocks \\
+7 & NeMo Guardrails, probe set & input rail blocks \\
+8 & LangGraph team, probe set & native hooks observe \\
+9 & CrewAI team, probe set & native hooks observe \\
+10 & team, keyword in data & observe, then each blocks \\
+11 & detector panel & none \\
+12 & team, prompt defenses & all observe \\
+13 & selector team, probe set & all observe \\
+\bottomrule
+\end{tabular}
+\label{tab:phases}
+\end{table}
+
+The language-model guard is the blocking guard in phases~3 to~6. At the
+full-probe unit it flags every attack probe (Section~\ref{sec:unit}), so a
+placement that fails to block does so because of what it receives, not
+because the guard is weak. The DeBERTa verdict is recorded on every scan in
+every phase. Nothing in the experiment changes the bench. Each phase
+hashes the bench's scanner and guard configuration on entry and again in
+a \texttt{finally} block on exit, and aborts on a mismatch.
+
+\subsection{Metrics}
+
+A \emph{goal breach} is the canary in a \texttt{save\_note} argument for a
+tool goal, or in the writer's final message for an output goal. A
+\emph{first-hop} compliance is the canary in any output of the researcher,
+the first agent to read the document. For InjecAgent, a breach is a call to
+the attacker tool.
+
+A placement \emph{sees} an injection when one of its scans contains the
+inserted passage. A scan is \emph{in time} when its verdict could still
+change what an agent reads: every model-client and tool-boundary scan, and
+bus scans of the two message types delivered to agents. A placement
+\emph{catches} an injection when an in-time scan that contains the passage is
+flagged. A benign run is \emph{disrupted} at a placement when any in-time
+scan there is flagged, because in block mode that scan withholds a message.
+
+A blocking phase is compared with phase~2 on the same probe and entry point
+by an exact McNemar test~\cite{mcnemar1947} on the discordant pairs. Rates
+over fewer than about thirty items carry a Wilson interval~\cite{wilson1927},
+and independent groups are compared with a Fisher exact
+test~\cite{fisher1935}.
+
+% ==========================================================================
+\section{Results: The Unit of Text Changes the Verdict of Most Guards}
+\label{sec:unit}
+
+Phase~1 gives each guard the same probe embedded in its carrier and as the
+inserted passage alone (Table~\ref{tab:unit}). None of the three guards
+gives the same verdicts at both units. The two guards used in the placement runs move in
+opposite directions on recall, and a larger language-model guard moves on
+false positives instead.
+
+DeBERTa flags \OneDebertaTextAttackK{} of \OneDebertaTextAttackN{} attack
+probes (\OneDebertaTextAttackPct{}) and \OneDebertaPassageAttackK{} of
+\OneDebertaPassageAttackN{} passages (\OneDebertaPassageAttackPct{}). On the
+same probes, \OneDebertaUnitPassageOnly{} are caught only as a passage and
+\OneDebertaUnitTextOnly{} only in their carrier (exact McNemar,
+$p=\OneDebertaUnitP{}$). The language-model guard reverses the pattern. It
+flags \OneLlmTextAttackK{} of \OneLlmTextAttackN{} attack probes
+(\OneLlmTextAttackPct{}) and \OneLlmPassageAttackK{} of
+\OneLlmPassageAttackN{} passages (\OneLlmPassageAttackPct{}).
+\OneLlmUnitTextOnly{} attacks are caught only in their carrier and
+\OneLlmUnitPassageOnly{} only as a passage ($p=\OneLlmUnitP{}$).
+
+\begin{table}[t]
+\centering
+\caption{Probes flagged by each guard, as the full probe and as the inserted
+passage alone. Counts are flagged over group size. The two language-model
+guards run the same prompt on \texttt{\AgentModel{}} (9B) and
+\texttt{qwen/qwen3.8-27b} (27B).}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\input{tables/tab_unit.tex}
+\label{tab:unit}
+\end{table}
+
+The templates show where each loss comes from (Table~\ref{tab:unittpl}).
+DeBERTa loses attacks inside a carrier across every template, including
+\texttt{important\_instructions}, which it flags as a passage in
+\OneDebertaPassageImportantInstructionsK{} of
+\OneDebertaPassageImportantInstructionsN{} cases and in its carrier in
+\OneDebertaTextImportantInstructionsK{}. The model card lists prompt and instruction
+datasets as its training sources~\cite{protectai2024deberta}, and a few
+injected sentences inside several hundred characters of weather or abstract
+text do not resemble a prompt. The language-model guard loses exactly two templates as a
+passage: \texttt{direct}, flagged in \OneLlmPassageDirectK{} of
+\OneLlmPassageDirectN{}, and \texttt{system\_message}, flagged in
+\OneLlmPassageSystemMessageK{} of \OneLlmPassageSystemMessageN{}. Stripped of
+a short prefix, both passages are a polite request to include a code or save
+a note, which is a legitimate thing to ask an agent. Inside a weather alert
+or an abstract the same request is out of place, and the guard flags every
+one.
+
+\begin{table}[t]
+\centering
+\caption{Attack probes flagged per AgentDojo template.}
+\scriptsize
+\input{tables/tab_unit_template.tex}
+\label{tab:unittpl}
+\end{table}
+
+The in-carrier gain of the language-model guard is not a response to any
+out-of-place sentence. Hard negatives sit in the same carriers at the same
+point, and the guard flags \OneLlmTextHnImperativeK{} of
+\OneLlmTextHnImperativeN{} imperative, \OneLlmTextHnVocabK{} of
+\OneLlmTextHnVocabN{} vocabulary and \OneLlmTextHnIdentifierK{} of
+\OneLlmTextHnIdentifierN{} identifier hard negatives, and
+\OneLlmTextMatchedK{} of \OneLlmTextMatchedN{} matched probes.
+
+The two guards of the placement runs beat the single surface features of the
+datasheet only at their favoured unit. The identifier feature alone, a pattern for canary-like
+tokens, separates attack from benign at an AUROC of \FeatIdentifierAuroc{},
+and the imperative feature at \FeatImperativeAuroc{}. DeBERTa's score reaches
+\OneDebertaPassageAuroc{} on the passage and \OneDebertaTextAuroc{} on the
+full probe. The language-model guard reaches \OneLlmTextAuroc{} on the full
+probe and \OneLlmPassageAuroc{} on the passage, computed from its one-word
+verdict. At its unfavoured unit, each guard is outscored by a one-line
+pattern.
+
+A larger guard does not remove the effect but moves it. The same prompt on
+\texttt{qwen/qwen3.8-27b}, a larger model than the agents', flags every attack
+at every unit (\OneLlmTwoSevenTextAttackK{}, \OneLlmTwoSevenPassageAttackK{}
+and \OneLlmTwoSevenMemoryAttackK{} of \OneLlmTwoSevenTextAttackN{} as full
+probe, passage and memory-wrapped probe). Its false positives depend on the
+unit. It flags \OneLlmTwoSevenTextBenignK{} of \OneLlmTwoSevenTextBenignN{}
+benign probes as full documents and \OneLlmTwoSevenPassageBenignK{} as
+passages, with \OneLlmTwoSevenBenignUnitTextOnly{} flagged only as full
+documents and \OneLlmTwoSevenBenignUnitPassageOnly{} only as passages
+(exact McNemar, $p=\OneLlmTwoSevenBenignUnitP{}$). Every one of these false
+positives is a hard negative: \OneLlmTwoSevenTextHnVocabK{} of
+\OneLlmTwoSevenTextHnVocabN{} vocabulary, \OneLlmTwoSevenTextHnIdentifierK{}
+of \OneLlmTwoSevenTextHnIdentifierN{} identifier and
+\OneLlmTwoSevenTextHnImperativeK{} of \OneLlmTwoSevenTextHnImperativeN{}
+imperative hard negatives, and \OneLlmTwoSevenTextMatchedK{} of
+\OneLlmTwoSevenTextMatchedN{} matched probes. Inside a whole document, the
+larger guard reacts to the surface feature the hard negative carries. Its
+AUROC is
+\OneLlmTwoSevenPassageAuroc{} on the passage and \OneLlmTwoSevenTextAuroc{}
+on the full probe. The larger model does not share the recall losses of the
+smaller guard, which rules out that they are a property of the probe set
+alone, and shows that they are a property of the guard at a given unit.
+
+The unit effect is not specific to these guards. Phase~11 scores the same
+probes with a panel of \NPanel{} detectors: the ProtectAI classifier, PIGuard,
+the over-defense-trained successor of InjecGuard~\cite{li2024injecguard},
+the deepset DeBERTa classifier~\cite{deepset2023injection}, a DistilBERT
+classifier~\cite{fmops2023distilbert}, and the two language-model guards
+(Table~\ref{tab:panel}). The unit changes the verdict significantly for
+every detector except PIGuard. For ProtectAI and the smaller language-model
+guard it changes recall. For the deepset classifier
+($p=\PanDeepsetBenUnitP{}$), the DistilBERT classifier ($p=\PanFmopsBenUnitP{}$)
+and the larger language-model guard it changes false positives, which rise on
+whole documents. PIGuard keeps its recall at every unit
+(\PanPiguardProbeAttackK{}, \PanPiguardPassageAttackK{} and
+\PanPiguardMemoryAttackK{} of \PanPiguardProbeAttackN{}), and its false
+positives shift only directionally ($p=\PanPiguardBenUnitP{}$). Two published
+classifiers flag every document at every unit, benign or not, although their
+scores still rank attacks above benign documents at an AUROC of
+\PanDeepsetProbeAuroc{} and \PanFmopsProbeAuroc{}: their fixed threshold was
+set for short prompts.
+
+The panel also runs on two external corpora. On NotInject, the over-defense
+benchmark of \NNotInject{} benign prompts that carry trigger
+words~\cite{li2024injecguard}, PIGuard flags \PanPiguardNotInjectK{}, close to
+the rate its authors report, and the ProtectAI classifier flags
+\PanProtectaiNotInjectK{}. On the deepset test split the deepset classifier
+detects \PanDeepsetDeepsetAttackK{} of \PanDeepsetDeepsetAttackN{} attacks, a
+score on the split's own distribution, since the classifier was trained on
+the same dataset.
+
+\begin{table*}[t]
+\centering
+\caption{Detector panel. Attacks flagged on our probe set as the full probe,
+the passage alone and the memory-wrapped probe, benign probes flagged as full
+probes, benign NotInject prompts flagged, and deepset test attacks detected.}
+\footnotesize
+\input{tables/tab_panel.tex}
+\label{tab:panel}
+\end{table*}
+
+A placement hands its guard a unit of text, and the unit is not the same at
+every placement. The tool boundary scans the raw tool output, the model
+client scans each message as the framework wraps it, and the bus scans what
+an agent chose to say after reading. Which unit favours detection depends on
+the guard, so no placement is best for every guard by construction.
+
+% ==========================================================================
+\section{Results: Coverage Follows the Interfaces, and AutoGen's Memory Wrapper Hides Injections From a Guard the Size of the Agents' Model}
+\label{sec:sees}
+
+Phases~2 to~5 run on the \NTestCarriers{} test carriers
+(Section~\ref{sec:protocol}), \TwoRuns{} observing runs with
+\TwoErrors{} errors. Without a guard the injections work. The goal is reached
+in \TwoAllGoalK{} of \TwoAllGoalN{} attack runs and the researcher, the first
+agent to read the document, complies in \TwoAllFirstHopK{} of
+\TwoAllFirstHopN{}. Entry matters for the goal: every task and agent-message
+injection reaches it (\TwoUserGoalK{} of \TwoUserGoalN{} and
+\TwoAgentGoalK{} of \TwoAgentGoalN{}), against \TwoToolGoalK{} of
+\TwoToolGoalN{} through a tool result, where the researcher complies in
+\TwoToolFirstHopK{} runs but the writer drops the canary. Every run counted
+as a breach, in every team phase, was read in full. Of \HandBreaches{},
+\HandObeyed{} carry the canary as instructed and \HandOtherWording{} deliver it
+to the user in other wording, restating the injected instruction or
+presenting the code as part of the document, which still places it in the
+answer. No
+benign run contained its unused canary (\TwoBenignCanaryHits{}).
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_catch.pdf}
+\caption{Share of attack runs in which a placement flags the injected
+passage while an agent can still be spared from reading it, per entry point,
+for each guard, on the test carriers. A cross marks a placement that never
+receives the injected text in time for that entry point
+(Table~\ref{tab:visibility}). Bars carry \CiLevel{} Wilson intervals.}
+\label{fig:catch}
+\end{figure*}
+
+The language-model guard catches the injection in time wherever the
+interfaces let a placement receive it (Fig.~\ref{fig:catch}), with one
+exception. The model client catches every tool, task and agent injection,
+the bus every task and agent injection, and the tool boundary every tool
+injection. At memory entry the model client catches \TwoModelLlmMemoryCatchK{}
+of \TwoModelLlmMemoryCatchN{}. AutoGen inserts memory into the model context
+as a system message that begins with a fixed header and numbers the entries,
+and the guard at the model client receives that wrapped text. The bus
+receives the same memory text raw, as a late copy of the memory query. Over
+every phase-2 memory run on an attack probe, the guard flags the raw text in
+\MemRawK{} of \MemRawN{} runs and the wrapped text in \MemWrappedK{}.
+\MemRawOnly{} runs are caught only raw and \MemWrappedOnly{} only wrapped
+(exact McNemar, $p=\MemWrapperP{}$). Phase~1 repeats the comparison outside
+the team on every probe, wrapping each in the exact system message AutoGen's
+\texttt{ListMemory} builds. The language-model guard flags
+\OneLlmMemoryAttackK{} of \OneLlmMemoryAttackN{} attack probes wrapped,
+against \OneLlmTextAttackK{} as the plain document (\OneLlmMemoryTextOnly{}
+caught only plain, \OneLlmMemoryMemoryOnly{} only wrapped,
+$p=\OneLlmMemoryP{}$), and \OneLlmMemoryBenignK{} of
+\OneLlmMemoryBenignN{} benign probes wrapped. The larger
+\texttt{qwen/qwen3.8-27b} guard flags \OneLlmTwoSevenMemoryAttackK{} of
+\OneLlmTwoSevenMemoryAttackN{} wrapped attacks, so the loss belongs to a
+guard of the agents' size, which is the size a deployment that reuses its
+agent model as the guard would run. The framework's own formatting
+of the text is what the placement changes, as Section~\ref{sec:unit} found
+for the document boundary. The cost side is small on this set. A flag on a benign
+run, which in block mode would withhold a message, occurs in
+\TwoModelLlmAllDisruptK{} of \TwoModelLlmAllDisruptN{} benign runs at the
+model client and \TwoBusLlmAllDisruptK{} of \TwoBusLlmAllDisruptN{} on the
+bus.
+
+\section{Results: Blocking Prevents a Breach Wherever the Guard Receives the Text in Time}
+\label{sec:blocking}
+
+Blocking with the language-model guard removes every breach at every entry
+point that the blocking placement receives in time, except memory at the
+model client (Table~\ref{tab:blocking}). Across entry points, blocking at the
+model client prevents \BlockModelAllPrevented{} breaches and creates
+\BlockModelAllInduced{} ($p=\BlockModelAllP{}$). Blocking on the bus, run only
+for the task and agent entry points that the bus receives before any agent
+reads them, prevents \BlockBusAllPrevented{} ($p=\BlockBusAllP{}$). The
+remaining memory breaches at the model client are the runs whose wrapped
+memory text the guard did not flag. Blocking does not break benign runs. A
+benign run still ends with a summary that shares content words with its
+document in \BlockModelAllBenignDoneK{} of \BlockModelAllBenignDoneN{} runs
+at the model client, against \BaseModelAllBenignDoneK{} without blocking,
+and in \BlockBusAllBenignDoneK{} of \BlockBusAllBenignDoneN{} on the bus.
+Per entry point the groups hold \NTestCarriers{} runs, so a single
+comparison reaches significance only when every breach is prevented.
+
+\begin{table}[t]
+\centering
+\caption{Goal breaches on attack probes before blocking (phase~2) and with
+one placement blocking (phases~3 to~5), paired per carrier. The bus blocks
+only where it receives the text in time, and the tool boundary exists only
+for tool entry. The $p$ value is the exact McNemar test.}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\input{tables/tab_blocking.tex}
+\label{tab:blocking}
+\end{table}
+
+\section{Results: A Guard That Receives the Text in Time Outperforms Prompt-Level Defenses}
+\label{sec:prompt-defenses}
+
+Prompt-level defenses change how the document is presented to the agents
+instead of screening it. Phase~12 runs the same team, probes and entry points
+with spotlighting by datamarking~\cite{hines2024spotlighting}, which joins the
+document's words with a marker and tells both agents that marked text is
+data, and with the sandwich defense~\cite{liu2023formalizing}, which restates
+the task after the document (Table~\ref{tab:defenses}). Spotlighting reduces
+first-hop compliance from \TwoAllFirstHopK{} to \TwelveSpotlightAllFirstHopK{}
+of \TwelveSpotlightAllFirstHopN{} attack runs (exact McNemar,
+$p=\TwelveSpotlightAllFirstHopP{}$), but goal breaches fall only from
+\TwoAllGoalK{} to \TwelveSpotlightAllGoalK{} ($p=\TwelveSpotlightAllP{}$,
+directional), because the canary still reaches the goal through the other
+agent. The sandwich defense leaves \TwelveSandwichAllGoalK{} breaches
+($p=\TwelveSandwichAllP{}$). Blocking with a guard at a placement that
+receives the text in time leaves \BlockModelAllGoalK{} at the model client
+(Section~\ref{sec:blocking}). Paired on the same probe and entry point,
+\GuardVsSpotOnlySpot{} runs breach under spotlighting and not under the
+model-client block, and \GuardVsSpotOnlyGuard{} the other way
+($p=\GuardVsSpotP{}$). Neither prompt defense stops a benign task:
+\TwelveSpotlightAllBenignDoneK{} and \TwelveSandwichAllBenignDoneK{} of
+\TwelveSpotlightAllBenignDoneN{} benign runs complete.
+
+\begin{table}[t]
+\centering
+\caption{Goal breaches on attack probes per entry point with no defense,
+with a prompt-level defense, and with the language-model guard blocking at
+each placement, \NTestCarriers{} runs per cell. A placement marked n/a does
+not receive the text before an agent reads it.}
+\scriptsize
+\setlength{\tabcolsep}{2.5pt}
+\input{tables/tab_defenses.tex}
+\label{tab:defenses}
+\end{table}
+
+\section{Results: A Model-Chosen Speaker Order Keeps the Placement Map and Adds a Reader}
+\label{sec:selector}
+
+Phase~13 replaces the fixed speaking order with AutoGen's
+\texttt{SelectorGroupChat}, in which a model reads the transcript and picks
+each next speaker. The goal is reached in \ThirteenAllGoalK{} of
+\ThirteenAllGoalN{} attack runs, against \TwoAllGoalK{} with the fixed order,
+and each placement catches the same entry points in time: the model client
+\ThirteenModelAllCatchK{}, the bus \ThirteenBusAllCatchK{} and the tool
+boundary \ThirteenToolAllCatchK{} of \ThirteenAllGoalN{}. The selector's own
+model call receives the injected text in \ThirteenUserSelectorSeesK{} of
+\ThirteenUserSelectorSeesN{} task-entry and \ThirteenAgentSelectorSeesK{} of
+\ThirteenAgentSelectorSeesN{} agent-entry runs, because it reads the
+transcript the injection is part of. It never receives a tool result or a
+memory entry (\ThirteenToolSelectorSeesK{} and \ThirteenMemorySelectorSeesK{}),
+which stay inside the agent that read them. A model-client guard therefore
+also covers the component that chooses who speaks next, and the bus and tool
+placements keep their coverage.
+
+\section{Results: On a Third-Party Corpus the Guard Misses Injections a Placement Receives in Time}
+\label{sec:injecagent}
+
+On \NTestInjec{} InjecAgent cases the agent calls the attacker's tool in
+\SixNoneCalledK{} of \SixNoneCalledN{} runs without blocking. Blocking at the
+model client leaves \SixModelCalledK{} ($p=\SixModelP{}$), at the tool
+boundary \SixToolCalledK{} ($p=\SixToolP{}$), and on the bus
+\SixBusCalledK{} ($p=\SixBusP{}$), all directional at this size. The bus
+result follows from its timing: it receives the tool result only after the
+agent has acted on it. The model-client and tool-boundary results do not
+reach zero for a different reason. The guard flags the injected tool
+response at the tool boundary in \SixCatchToolK{} of \SixCatchToolN{} cases,
+against \TwoToolLlmToolCatchK{} of \TwoToolLlmToolCatchN{} test-carrier
+attacks at the same placement and entry point.
+InjecAgent plants a short, plain request in one field of a JSON tool
+response, and the guard passes a share of these. The two corpora disagree on
+how often the guard fires, while agreeing on which placements receive the
+text in time.
+
+\section{Results: A Regex Denylist on Retrieved Documents Decides on the Carrier, Not the Injection}
+\label{sec:gateway}
+
+A guard can also sit in front of the whole team and scan each retrieved
+document before any agent reads it. The bench's NeMo Guardrails input rail
+does this for retrieval context (Section~\ref{sec:system}). Its regular
+expressions were written for this bench and are not part of NeMo
+Guardrails, which ships other jailbreak checks that were not tested. The
+result below is about a denylist of this kind placed on whole documents,
+not about NeMo Guardrails. Phase~7 passed every probe through it. The rail decides before any model call, so the
+backend model, \texttt{\GatewayBackendModel{}}, cannot change a block
+decision.
+
+The rail blocks \SevenAttackBlockedK{} of \SevenAttackBlockedN{} attack
+probes (\SevenAttackBlockedPct{}) and \SevenBenignBlockedK{} of
+\SevenBenignBlockedN{} benign probes (\SevenBenignBlockedPct{}), a
+difference that is not significant (Fisher exact, $p=\SevenFisherP{}$). On
+the same carrier, \SevenOnlyAttack{} carriers have only the attack blocked
+and \SevenOnlyMatched{} only the matched benign probe
+($p=\SevenPairedP{}$). The block decision does not separate the classes
+(Fig.~\ref{fig:gateway}).
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig_gateway.pdf}
+\caption{Input-rail block rate per probe group, split by the rule the
+bench's record names. A regex that already matches the carrier
+with the passage removed is counted as carrier. Bars carry \CiLevel{} Wilson
+intervals.}
+\label{fig:gateway}
+\end{figure}
+
+The bench's record names the rule behind every block. Regular
+expressions account for \SevenRegexShareK{} of \SevenRegexShareN{} blocks
+and one pattern, \texttt{\SevenTopPattern{}}, for \SevenTopPatternShareK{}.
+The pattern is unanchored and matches almost any English paragraph that
+contains the letters \emph{act}, then \emph{as}, then \emph{a}, as in
+``impacts \dots\ as \dots\ a''. Removing the inserted passage and applying
+the triggering pattern to the carrier alone reproduces the match for
+\SevenCarrierDecidesK{} of \SevenCarrierDecidesN{} regex blocks. For those
+probes the carrier, which every probe of the carrier shares, decided the
+block.
+
+The classifier half of the rail behaves as it did standalone. It blocks
+\SevenMlAttackK{} of \SevenMlAttackN{} attack probes and
+\SevenMlBenignK{} of \SevenMlBenignN{} benign probes. These are the same
+attack probes, one for one, that DeBERTa flagged on the full probe in
+phase~1 (\OneDebertaTextAttackK{} of \OneDebertaTextAttackN{}), and the
+verifier checks the two sets for equality. An input rail
+that scans a whole retrieved document is a guard at the widest unit of text, and
+Section~\ref{sec:unit} showed that DeBERTa loses the injection at that unit.
+
+\section{Results: The Same Three Placements Exist in LangGraph and CrewAI}
+\label{sec:frameworks}
+
+LangGraph and CrewAI expose native hooks that match the three AutoGen
+placements (Fig.~\ref{fig:frameworks}). LangChain's agent middleware offers
+\texttt{before\_model} and \texttt{wrap\_tool\_call}, and a node in the
+LangGraph state graph sits between the two agents. CrewAI offers global
+\texttt{before\_llm\_call} and \texttt{after\_tool\_call} hooks, and a task
+guardrail that validates the researcher's output before the writer's task
+receives it. Phases~8 and~9 run the same team, model, guard and probes
+through each framework.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_frameworks.pdf}
+\caption{Native interception points of the three frameworks, grouped by the
+placement they correspond to. The between-agent hook of every framework
+receives tool results only after the agent has read them.}
+\label{fig:frameworks}
+\end{figure*}
+
+Phases~8 and~9 run the attack and matched probes of the test carriers
+through each framework's tool entry point
+(\FwLanggraphErrors{} and \FwCrewaiErrors{} failed runs). The timing pattern
+of AutoGen recurs (Table~\ref{tab:frameworks}). In LangGraph the model and
+tool hooks catch the injection in time in \FwLanggraphModelCatchK{} and
+\FwLanggraphToolCatchK{} of \FwLanggraphModelCatchN{} attack runs, and the
+node between the agents catches it in time in \FwLanggraphHandoffCatchK{}:
+it holds the injected tool message only after the researcher has read it,
+and flags it there in \FwLanggraphHandoffLateK{}. In CrewAI the model and
+tool hooks catch it in \FwCrewaiModelCatchK{} and \FwCrewaiToolCatchK{} of
+\FwCrewaiModelCatchN{}, and the task guardrail, which receives only the
+researcher's output, in \FwCrewaiHandoffCatchK{}. The frameworks differ in
+what else their model hook receives. CrewAI builds its own instructions for
+tool use into the prompt of every model call, and the guard flags that
+scaffolding: a model-hook flag occurs in \FwCrewaiModelFalseK{} of
+\FwCrewaiModelFalseN{} benign CrewAI runs, against
+\FwLanggraphModelFalseK{} of \FwLanggraphModelFalseN{} in LangGraph, whose
+system prompt is kept outside the scanned messages. Every one of the
+\FwCrewaiScaffoldFlags{} flagged scans in benign CrewAI runs is a user-role
+prompt CrewAI assembles that does not contain the document, and
+\FwCrewaiDocumentFlags{} contain it. A model-level guard in
+CrewAI would block benign runs on the framework's own text. The researcher
+complies in \FwLanggraphFirstHopK{} of \FwLanggraphFirstHopN{} LangGraph runs
+and \FwCrewaiFirstHopK{} of \FwCrewaiFirstHopN{} CrewAI runs, and the goal is
+reached in \FwLanggraphGoalK{} and \FwCrewaiGoalK{}.
+
+\begin{table}[t]
+\centering
+\caption{Native hooks of LangGraph and CrewAI with the language-model guard
+observing, tool entry, test carriers. Caught counts attack runs flagged in
+time, late counts runs flagged only after the agent read the text, and false
+counts benign runs with any in-time flag.}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\input{tables/tab_frameworks.tex}
+\label{tab:frameworks}
+\end{table}
+
+
+
+\section{Results: AutoGen's Termination Check Reads Data, and Only Some Placements Can Stop It}
+\label{sec:runtime}
+
+A round-robin team ends when its termination condition fires. The group-chat
+manager evaluates that condition on each agent response it receives, and the
+messages it passes to the condition include the response's inner events, a
+tool result among them, as well as its final chat message
+(\texttt{\_base\_group\_chat\_manager.py} in AutoGen \AutogenVersion{}). The
+text-mention condition, the documented way to let an agent end a team with
+a keyword, converts every message it receives to text and fires when the
+keyword appears (\texttt{\_terminations.py}). The manager also evaluates the
+task message, which \texttt{team.run} hands it by a direct send rather than
+by a publish. A retrieved document, a task or a memory entry that merely
+contains the keyword should therefore end the team, whether or not any model
+repeats it.
+
+Phase~10 tests this reading. Each of the \NCarriers{} matched benign probes
+gets the keyword appended to its inserted passage and nothing else, so the
+document carries no instruction to any model. The team runs with the
+text-mention condition on that keyword. A run that stops before the writer
+has spoken can only have been stopped by the runtime reading data. The same
+carriers without the keyword are the control. A deterministic filter that
+removes the keyword then blocks at one placement at a time, and a last
+condition restricts the text-mention check to the writer through its
+\texttt{sources} argument. The filter removes only the keyword, so a
+prevented stop is not bought by deleting the document, and the analysis
+checks that the document still reached the researcher.
+
+The reading holds in every run (Table~\ref{tab:keyword}). The stop itself is
+deterministic runtime behaviour, and the runs confirm it rather than
+estimate a rate. What the runs measure is which placements can prevent it
+and whether any model had to see the keyword. With the keyword
+in the data, the team stops before the writer speaks in every run at every
+entry point, and without it in none ($p=\TenControlAllP{}$ over the paired
+runs). Blocking at the model client prevents \TenBlockModelAllPrevented{} of
+these stops. At tool entry under that block, the keyword reached a model in
+\TenBlockModelToolKeywordReachedModelK{} of
+\TenBlockModelToolKeywordReachedModelN{} runs, so the runtime ended teams
+whose models never saw the keyword. Blocking on the bus prevents
+all \TenBlockBusAllPrevented{} ($p=\TenBlockBusAllP{}$), blocking at the tool
+boundary prevents every stop at tool entry, and restricting the condition to
+the writer prevents every stop without a guard ($p=\TenWriterOnlyAllP{}$).
+Where a guard prevented a stop, the document still reached the researcher,
+in \TenBlockBusToolDocReachedK{} of \TenBlockBusToolDocReachedN{} tool-entry
+runs with the bus blocking.
+
+\begin{table}[t]
+\centering
+\caption{Runs that stop before the writer speaks, per condition and entry
+point, \NTestCarriers{} carriers each. The keyword is appended to a benign
+passage and carries no instruction to any model.}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\input{tables/tab_keyword.tex}
+\label{tab:keyword}
+\end{table}
+
+The placements differ on this signal for a structural reason. A
+model-client guard changes only what a model reads, and the manager does not
+read what the model reads. A tool guard removes the keyword before the
+tool-result event exists. A guard on the bus sees the response, inner events
+included, before the manager does, and sees the task on the manager's direct
+send if it intercepts sends as well as publishes.
+
+% ==========================================================================
+\section{Verification}
+\label{sec:verify}
+
+Every number in the paper is generated from the raw logs into a macro file
+and re-derived by a verifier written independently of the analysis code,
+which exits with an error on any disagreement and runs before every build.
+It ran \NVerifyChecks{} checks on the final build. Beyond numeric agreement,
+it recomputes every guard verdict from the guard's raw output, checks that
+each phase-1 verdict hashes to the probe text it claims, checks that every
+language-model guard call was answered by the configured model, recomputes
+every input-rail block from the rail's own event record and re-applies the
+triggering pattern to the carrier, and checks that the rail's classifier
+blocks exactly the attack probes DeBERTa flagged in phase~1. It also checks
+that the bench's configuration hash did not change during any phase, and
+rejects undefined macros, typed percentages, citations without a
+bibliography entry and entries never cited, references without a label, em
+and en dashes, arrows, semicolons, vague deixis, and a named method used
+without a citation. A figure checker parses every concept diagram and
+rejects boxes that overlap or leave the canvas, labels that do not fit their
+box, type below a floor, digits in figure text, and arrows whose head points
+away from their stroke, that stop short of a box or run through one. Each
+check was shown to fire by breaking it on purpose in a copy of the project,
+and \NBreakTestsFire{} of \NBreakTests{} deliberate breaks fired.
+
+\section{Limitations}
+\label{sec:limits}
+
+\emph{Detector coverage.} The panel covers four published classifiers and a
+language-model detector on two models of one family. Meta's Prompt Guard
+models are gated and are not included, and the deepset classifier's score on
+the deepset split is in distribution.
+
+\emph{The placement runs use the agents' model as the guard.} The guard in
+phases~2 to~10 runs \texttt{\AgentModel{}}, as the agents do. Phase~1
+repeats the unit and memory tests with a larger model, which does not show
+the recall losses (Section~\ref{sec:unit}). The memory result in
+Section~\ref{sec:sees} therefore holds for a guard of the agents' size, and
+the placement runs were not repeated with the larger guard.
+
+\emph{Test-scale team runs.} Phases~2 to~6 and~8 to~10 use
+\NTestCarriers{} carriers, so each placement and entry point holds
+\NTestCarriers{} attack runs and a single paired comparison reaches
+significance only when nearly every run moves. Phases~1 and~7 cover all
+\NProbes{} probes.
+
+\emph{One agent model, one team, one run per cell.} Every team run uses one
+model at temperature zero with a fixed seed, and each probe and entry point
+runs once. Run-to-run variation of the local server was not measured, so a
+difference of a few runs between conditions is not interpreted.
+
+\emph{The attacks are published templates, not adaptive attacks.} The
+\NTemplates{} AgentDojo templates carry polite, imperative goals. An
+attacker who writes against a known guard, or phrases the goal without an
+imperative, is out of scope. Two attack features, second-person address
+and tag-like delimiters, have no hard negative in the probe set.
+
+\emph{Small groups and one annotator.} Hard-negative families hold
+\NHnImperative{}, \NHnVocab{} and \NHnIdentifier{} probes, so per-family rates
+carry wide intervals. Labels follow from construction, and the benign
+passages were read by a single annotator with no agreement statistic.
+
+\emph{The input rail is one configuration.} The regular expressions of the
+rail in Section~\ref{sec:gateway} were written for the bench. The result
+shows what an unanchored denylist does on whole documents. It says nothing
+about NeMo Guardrails' shipped checks.
+
+\emph{One runtime control signal.} Beyond injected instructions, the study
+measures one runtime risk, the termination keyword
+(Section~\ref{sec:runtime}). Code execution, handoffs between agents and
+leakage of secrets are out of scope.
+
+\emph{A lenient completion check.} A benign run counts as completed when the
+writer's answer shares three words of six or more letters with the document
+and carries no withheld marker. The check detects an answer written without
+the document. It does not grade the summary, so a block that degrades the
+summary without removing the document passes it.
+
+\emph{One blocking action.} A blocking placement replaces the flagged text
+with a fixed marker. Dropping the message or stopping the run would change
+what the agents do next and was not measured.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Where a guard sits decides which text it reads and whether it reads it
+before an agent acts. The interfaces fix part of that: a tool wrapper cannot
+see a task, and a message bus sees a tool result only after the agent has
+read it. The rest was measured. Every guard tested changes its verdict with
+the unit of text, through recall or through false positives, and for a guard
+the size of the agents' model the framework's own formatting of that text,
+as with AutoGen's memory message, is enough to lose injections. Blocking works where the text
+arrives in time, and it outperforms changing how the document is presented
+to the agents. A denylist on whole documents decides on the document, not
+the injection. And a framework's runtime can read data as a control signal,
+which a guard on the model client cannot stop. These results cover one
+framework in depth with two orchestration styles, two more frameworks for
+placement and cost, one agent model family, and a test-scale set of team runs (Section~\ref{sec:limits}). A deployment that
+places a guard should check both what text arrives at that point and what
+the runtime does with the data before any model reads it.
+
+\section*{Ethics and Reproducibility}
+
+Every attack goal is a canary string, every attacker tool is a stub, and every
+run is local. The probe set, raw logs and code are released as described in
+Appendix~\ref{app:artifact}.
+
+\bibliographystyle{IEEEtran}
+\bibliography{bibliography}
+
+\appendices
+
+\section{Abbreviations}
+\label{app:abbrev}
+
+\noindent\begin{tabular}{@{}lp{0.78\columnwidth}@{}}
+API & application programming interface \\
+AUROC & area under the receiver operating characteristic curve \\
+LLM & large language model \\
+NWS & US National Weather Service \\
+RAG & retrieval-augmented generation \\
+\end{tabular}
+
+\section{System Configuration}
+\label{app:config}
+
+The configuration the runs read, as captured by phase~0:
+
+\lstinputlisting{tables/config_listing.json}
+
+The environment phase~0 recorded, including the model identifier the server
+echoed and the pinned DeBERTa revision:
+
+\lstinputlisting{tables/env_listing.json}
+
+The guard prompt, agent system messages and task messages, taken from the
+harness the runs executed:
+
+\lstinputlisting{tables/prompts_listing.txt}
+
+The NeMo Guardrails input rail's configuration, verbatim from the rules file
+phase~7 captured and hashed before and after the phase:
+
+\lstinputlisting{tables/gateway_rules_listing.yaml}
+
+The policy prompt of the bench's zero-shot classification model, verbatim.
+It defines the category codes S1 to S7 and H1 that Section~\ref{sec:system}
+cites:
+
+\lstinputlisting{tables/zeroshot_policy_listing.txt}
+
+The records phases~7 to~9 captured at their start:
+
+\lstinputlisting{tables/later_captures_listing.json}
+
+\section{Datasets}
+\label{app:datasets}
+
+Table~\ref{tab:composition} gives the composition of the probe set. The
+datasheet released with the artifact records the schema, the surface
+features and their single-feature AUROC, the provenance and licence of every
+source, the processing steps, the labelling procedure and its
+single-annotator status, and the known limitations. The source snapshot
+stores every retrieved NWS and arXiv record with its identifier, URL and
+retrieval time, and the probe builder reads only that snapshot. The
+InjecAgent selection is frozen with its commit, file, counts and licence
+text.
+
+\begin{table}[h]
+\centering
+\caption{Probe set composition. The median is the inserted passage's length
+in characters.}
+\small
+\input{tables/tab_composition.tex}
+\label{tab:composition}
+\end{table}
+
+\section{Scenarios as Bench Workflows}
+\label{app:studio}
+
+The bench includes a node-graph editor. Each node calls one bench function:
+a text node passes its text on, a script node runs a Python script in the
+bench's Python environment with the upstream text as its argument, a chat
+node sends a message through the NeMo Guardrails rails, and a
+classification node sends text to a bench classification model. Every
+scenario in the paper also exists as such a workflow, run through the same
+functions and stored with its run so the editor replays it
+(Table~\ref{tab:studio}). The script nodes run the three framework teams of
+Section~\ref{sec:frameworks}. Fig.~\ref{fig:studio} draws the framework
+comparison workflow from the graph the bench stores. The fourth workflow
+reads the generated results and charts them.
+
+\begin{table}[h]
+\centering
+\caption{Bench workflows authored for the study, from the stored graphs.}
+\scriptsize
+\input{tables/tab_studio.tex}
+\label{tab:studio}
+\end{table}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_studio.pdf}
+\caption{The framework comparison workflow as the bench stores it. One
+injected document runs through the same team in AutoGen, LangGraph and
+CrewAI, each a script node, and a final script compares the guard's scans
+per framework and placement.}
+\label{fig:studio}
+\end{figure*}
+
+\section{Artifact Availability}
+\label{app:artifact}
+
+The artifact contains the probe builder and source snapshot, the frozen
+InjecAgent selection, the experiment harness, the framework teams, the bench
+workflow builder and stored graphs, every raw call log, the analysis and
+verification scripts, and the figure sources. Code is released under the MIT
+licence and the probe set under CC-BY-4.0. The AgentDojo templates and
+InjecAgent cases keep their MIT licences, reproduced in the artifact.
+
+\end{document}

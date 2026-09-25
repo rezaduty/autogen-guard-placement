@@ -1,0 +1,23 @@
+{
+ "1": {
+  "name": "title36 1. AutoGen guard placements on one injected document",
+  "workflow_id": "wf5fb07c934b",
+  "run_id": "rc63a49a68bac",
+  "status": "ok",
+  "permalink": "http://127.0.0.1:8000/studio/wf5fb07c934b?run=rc63a49a68bac"
+ },
+ "2": {
+  "name": "title36 2. Same team in AutoGen, LangGraph and CrewAI",
+  "workflow_id": "wfc689363f91",
+  "run_id": "r254711a8cbf2",
+  "status": "ok",
+  "permalink": "http://127.0.0.1:8000/studio/wfc689363f91?run=r254711a8cbf2"
+ },
+ "3": {
+  "name": "title36 3. Gateway pipeline and guard models on attack, matched and hard negative",
+  "workflow_id": "wfcb65f94656",
+  "run_id": "rd8932b5b60c9",
+  "status": "ok",
+  "permalink": "http://127.0.0.1:8000/studio/wfcb65f94656?run=rd8932b5b60c9"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "python": "3.11.16",
+ "packages": {
+  "autogen-agentchat": "0.7.5",
+  "autogen-core": "0.7.5",
+  "autogen-ext": "0.7.5",
+  "transformers": "5.17.0",
+  "torch": "2.14.0",
+  "openai": "3.19.2"
+ },
+ "agent_model_requested": "qwen/qwen3.5-9b",
+ "agent_model_echoed": "qwen/qwen3.5-9b",
+ "echo_reasoning_chars": 0,
+ "workbench_state_sha": "0e32be46455c259f",
+ "deberta": {
+  "model": "protectai/deberta-v3-base-prompt-injection-v2",
+  "revision": "90c9989b1a342275dd0d1a95aad283c04e075671",
+  "max_length": 512
+ }
+}

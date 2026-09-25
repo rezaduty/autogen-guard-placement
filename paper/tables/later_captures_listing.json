@@ -1,0 +1,26 @@
+{
+ "phase 7": {
+  "rules_file": "predefined_prompts.yaml",
+  "rules_sha256": "29c61e525279da7c",
+  "pipeline_input_rails": [
+   "check jailbreak"
+  ],
+  "pipeline_output_rails": [
+   "mask sensitive data on output",
+   "sanitize links on output"
+  ],
+  "backend_model": "qwen2.5-0.5b-instruct-mlx"
+ },
+ "phase 8": {
+  "framework": "langgraph",
+  "team_code_sha256": "c7ff412faf03a597",
+  "agent_model": "qwen/qwen3.5-9b",
+  "guard_model": "qwen/qwen3.5-9b"
+ },
+ "phase 9": {
+  "framework": "crewai",
+  "team_code_sha256": "198f19f98dcbcfd6",
+  "agent_model": "qwen/qwen3.5-9b",
+  "guard_model": "qwen/qwen3.5-9b"
+ }
+}

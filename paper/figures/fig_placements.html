@@ -1,0 +1,131 @@
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+  @page{size:1100px 580px;margin:0}
+  body{width:1100px;height:580px;position:relative;background:#fff;color:#1f2733}
+  .zone{position:absolute;border-radius:16px;border:2px dashed #cfd4dc}
+  .zlab{position:absolute;font-size:15px;letter-spacing:2px;text-transform:uppercase;
+        color:#8a93a2;font-weight:bold}
+  .box{position:absolute;border-radius:12px;overflow:hidden;
+       box-shadow:0 1px 3px rgba(20,28,43,.10);
+       padding:8px 10px;display:flex;flex-direction:column;align-items:center;
+       justify-content:center;text-align:center}
+  .t{font-size:19px;font-weight:bold;line-height:1.2}
+  .s{font-size:15px;color:#6b7280;line-height:1.25;margin-top:3px}
+  .node{background:#f6f7f9;border:2px solid #d9dde4}
+  .atk{background:#fdeef1;border:2px solid #e4485f}
+  .out{background:#eef5fc;border:2px solid #245b81}
+  .guard{background:#e9f5ef;border:2px solid #2f7d68}
+  .late{background:#fff7eb;border:2px solid #d97706}
+  .leg{position:absolute;font-size:15px;color:#6b7280;line-height:1.3}
+  svg.wires{position:absolute;inset:0;width:1100px;height:580px}
+</style>
+
+<div class="zone" style="left:12px;top:44px;width:196px;height:452px"></div>
+<div class="zlab" style="left:28px;top:54px">Attacker</div>
+<div class="zone" style="left:222px;top:44px;width:666px;height:452px"></div>
+<div class="zlab" style="left:238px;top:54px">AutoGen team</div>
+<div class="zone" style="left:902px;top:44px;width:186px;height:452px"></div>
+<div class="zlab" style="left:918px;top:54px">Outputs</div>
+
+<svg class="wires">
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#e4485f"/></marker>
+    <marker id="ag" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#8a93a2"/></marker>
+    <marker id="ab" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#245b81"/></marker>
+    <marker id="aa" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#d97706"/></marker>
+    <marker id="ae" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2f7d68"/></marker>
+  </defs>
+  <!-- attacker document into the four entry points, along one trunk -->
+  <path d="M190,282 L860,282" stroke="#e4485f" stroke-width="2.2" fill="none" stroke-dasharray="7 4"/>
+  <line x1="300" y1="282" x2="300" y2="262" stroke="#e4485f" stroke-width="2.2" marker-end="url(#ar)"/>
+  <line x1="440" y1="282" x2="440" y2="262" stroke="#e4485f" stroke-width="2.2" marker-end="url(#ar)"/>
+  <line x1="600" y1="282" x2="600" y2="262" stroke="#e4485f" stroke-width="2.2" marker-end="url(#ar)"/>
+  <line x1="860" y1="282" x2="860" y2="262" stroke="#e4485f" stroke-width="2.2" marker-end="url(#ar)"/>
+  <!-- entry points down to the researcher, through its model-client guard -->
+  <line x1="330" y1="260" x2="360" y2="358" stroke="#8a93a2" stroke-width="2" marker-end="url(#ag)"/>
+  <line x1="470" y1="260" x2="420" y2="358" stroke="#8a93a2" stroke-width="2" marker-end="url(#ag)"/>
+  <line x1="630" y1="260" x2="480" y2="358" stroke="#8a93a2" stroke-width="2" marker-end="url(#ag)"/>
+  <line x1="760" y1="260" x2="760" y2="298" stroke="#8a93a2" stroke-width="2" marker-end="url(#ag)"/>
+  <line x1="700" y1="330" x2="532" y2="360" stroke="#8a93a2" stroke-width="2" marker-end="url(#ag)"/>
+  <!-- researcher reply to the writer, through the writer's model-client guard -->
+  <path d="M540,440 C574,440 580,380 598,380 L620,380" stroke="#8a93a2" stroke-width="2" fill="none" marker-end="url(#ag)"/>
+  <!-- bus content passes the bus guard before delivery -->
+  <line x1="334" y1="124" x2="334" y2="144" stroke="#2f7d68" stroke-width="2" marker-end="url(#ae)"/>
+  <line x1="300" y1="186" x2="300" y2="210" stroke="#2f7d68" stroke-width="2" marker-end="url(#ae)"/>
+  <line x1="410" y1="186" x2="440" y2="210" stroke="#2f7d68" stroke-width="2" marker-end="url(#ae)"/>
+  <!-- late copies reach the bus after the read -->
+  <line x1="640" y1="212" x2="690" y2="188" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#aa)"/>
+  <line x1="820" y1="212" x2="820" y2="188" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#aa)"/>
+  <line x1="762" y1="146" x2="762" y2="126" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#aa)"/>
+  <!-- outputs -->
+  <path d="M840,440 C878,440 878,202 894,202 L914,202" stroke="#245b81" stroke-width="2" fill="none" marker-end="url(#ab)"/>
+  <path d="M840,456 C878,456 878,392 894,392 L914,392" stroke="#245b81" stroke-width="2" fill="none" marker-end="url(#ab)"/>
+</svg>
+
+<div class="box atk" style="left:26px;top:234px;width:164px;height:96px">
+  <div class="t">Document</div>
+  <div class="s">carrier with an inserted passage</div>
+</div>
+
+<div class="box node" style="left:236px;top:80px;width:636px;height:44px">
+  <div class="t">Runtime message bus</div>
+</div>
+<div class="box guard" style="left:236px;top:146px;width:196px;height:40px">
+  <div class="t">Bus guard</div>
+</div>
+
+<div class="box node" style="left:236px;top:212px;width:144px;height:48px">
+  <div class="t">Task</div>
+</div>
+<div class="box node" style="left:392px;top:212px;width:144px;height:48px">
+  <div class="t">Ingest agent</div>
+</div>
+<div class="box node" style="left:546px;top:212px;width:144px;height:48px">
+  <div class="t">Memory</div>
+</div>
+<div class="box node" style="left:700px;top:212px;width:172px;height:48px">
+  <div class="t">Fetch tool</div>
+</div>
+<div class="box guard" style="left:700px;top:300px;width:172px;height:40px">
+  <div class="t">Tool guard</div>
+</div>
+
+<div class="box guard" style="left:236px;top:360px;width:304px;height:40px">
+  <div class="t">Model-client guard</div>
+</div>
+<div class="box node" style="left:236px;top:408px;width:304px;height:66px">
+  <div class="t">Researcher</div>
+  <div class="s">reads the document first</div>
+</div>
+<div class="box guard" style="left:622px;top:360px;width:218px;height:40px">
+  <div class="t">Model-client guard</div>
+</div>
+<div class="box node" style="left:622px;top:408px;width:218px;height:66px">
+  <div class="t">Writer</div>
+  <div class="s">writes the final answer</div>
+</div>
+
+<div class="box out" style="left:916px;top:170px;width:158px;height:64px">
+  <div class="t">Final answer</div>
+</div>
+<div class="box out" style="left:916px;top:360px;width:158px;height:64px">
+  <div class="t">Saved note</div>
+</div>
+
+<div class="box late" style="left:652px;top:146px;width:220px;height:40px">
+  <div class="t">Late copies</div>
+</div>
+
+<div class="leg" style="left:14px;top:512px;width:1070px">
+  <svg width="40" height="12"><line x1="0" y1="6" x2="38" y2="6" stroke="#e4485f" stroke-width="2.2" stroke-dasharray="7 4"/></svg>
+  injected document, one entry point per run
+  <svg width="40" height="12" style="margin-left:18px"><line x1="0" y1="6" x2="38" y2="6" stroke="#8a93a2" stroke-width="2"/></svg>
+  content an agent reads
+  <svg width="40" height="12" style="margin-left:18px"><line x1="0" y1="6" x2="38" y2="6" stroke="#d97706" stroke-width="2" stroke-dasharray="5 4"/></svg>
+  event copy that reaches the bus after the agent has read it
+  <br>
+  <svg width="40" height="12"><rect x="1" y="1" width="36" height="10" rx="3" fill="#e9f5ef" stroke="#2f7d68" stroke-width="2"/></svg>
+  one guard, moved between three placements
+  <svg width="40" height="12" style="margin-left:18px"><line x1="0" y1="6" x2="38" y2="6" stroke="#245b81" stroke-width="2"/></svg>
+  where a canary is checked
+</div>

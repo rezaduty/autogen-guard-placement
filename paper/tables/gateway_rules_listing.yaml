@@ -1,0 +1,27 @@
+input_rail:
+  classifier:
+    engine: auto
+    model: protectai/deberta-v3-base-prompt-injection-v2
+    threshold: 0.5
+    enforce: true
+  injection_patterns:
+  - ignore.*instruction
+  - ignore.*rule
+  - bypass.*safety
+  - bypass.*filter
+  - system.*prompt
+  - developer.*mode
+  - dan.*mode
+  - do.*anything.*now
+  - act.*as.*a
+  - forget.*rule
+  - forget.*instruction
+  - override.*safety
+  - jailbreak
+  hazard_patterns:
+  - build a bomb
+  - make a weapon
+  - steal credit cards
+  - hack a server
+  - generate malware
+  - destroy the world

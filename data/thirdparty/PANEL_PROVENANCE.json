@@ -1,0 +1,32 @@
+{
+ "notinject": {
+  "repo": "leolee99/NotInject",
+  "revision": "847ae76cf8fea5ed325429e569ae8cfef022d2e0",
+  "licence": "MIT"
+ },
+ "deepset": {
+  "repo": "deepset/prompt-injections",
+  "revision": "4f61ecb038e9c3fb77e21034b22511b523772cdd",
+  "file": "data/test-00000-of-00001-701d16158af87368.parquet",
+  "licence": "Apache-2.0"
+ },
+ "prompts_chat": {
+  "repo": "fka/prompts.chat",
+  "revision": "fbea17f2045d053d27f1de9f099e9bfdbe55bf47",
+  "licence": "CC0-1.0",
+  "excluded_by_jailbreak_markers": 58,
+  "sampled": 200,
+  "seed": 20260925
+ },
+ "arxiv_security": {
+  "source": "data/sources/snapshot.json, arXiv vocab queries",
+  "licence": "CC0-1.0"
+ },
+ "counts": {
+  "notinject": 339,
+  "deepset": 116,
+  "title35": 91,
+  "prompts_chat": 200,
+  "arxiv_security": 61
+ }
+}

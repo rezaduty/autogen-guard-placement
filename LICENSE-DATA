@@ -1,0 +1,30 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Mohammadreza Rashidi
+
+The probe set and source snapshot in data/ and the measurement outputs in
+results/ are licensed under the Creative Commons Attribution 4.0
+International License, except for the third-party material listed below.
+
+You are free to share and adapt this material for any purpose, including
+commercially, provided you give appropriate credit, provide a link to the
+license, and indicate if changes were made.
+
+Full licence text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+ATTRIBUTION
+    Rashidi, M. (2026). Guard Placement and Interception Timing for
+    Runtime Risk Control in AutoGen Multi-Agent Teams.
+    Artifact: https://github.com/rezaduty/autogen-guard-placement
+
+THIRD-PARTY MATERIAL
+    NWS alert text in data/sources/ and data/probes/ is a work of the US
+    federal government and is in the public domain.
+
+    arXiv abstracts in data/sources/ and data/probes/ come from arXiv
+    metadata, released by arXiv under CC0 1.0.
+
+    AgentDojo attack templates inside the attack probes are used under the
+    MIT licence. InjecAgent cases and tool schemas in data/thirdparty/ are
+    used under the MIT licence. Both notices are reproduced in
+    LICENSE-THIRD-PARTY.

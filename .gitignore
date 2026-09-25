@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+# Operational logs carry local paths in warning tracebacks. The run records
+# in results/phase*/ are the data.
+results/*.log
+# LaTeX build products. The PDF is built by build.sh.
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.blg
+paper/*.pdf
+paper/arxiv_refs.json

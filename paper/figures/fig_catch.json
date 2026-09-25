@@ -1,0 +1,132 @@
+{
+ "llm_unreachable": [
+  "agent|tool",
+  "memory|bus",
+  "memory|tool",
+  "tool|bus",
+  "user|tool"
+ ],
+ "llm": {
+  "tool": {
+   "model": [
+    10,
+    10
+   ],
+   "bus": [
+    0,
+    10
+   ],
+   "tool": [
+    10,
+    10
+   ]
+  },
+  "user": {
+   "model": [
+    10,
+    10
+   ],
+   "bus": [
+    10,
+    10
+   ],
+   "tool": [
+    0,
+    10
+   ]
+  },
+  "agent": {
+   "model": [
+    10,
+    10
+   ],
+   "bus": [
+    10,
+    10
+   ],
+   "tool": [
+    0,
+    10
+   ]
+  },
+  "memory": {
+   "model": [
+    6,
+    10
+   ],
+   "bus": [
+    0,
+    10
+   ],
+   "tool": [
+    0,
+    10
+   ]
+  }
+ },
+ "deberta_unreachable": [
+  "agent|tool",
+  "memory|bus",
+  "memory|tool",
+  "tool|bus",
+  "user|tool"
+ ],
+ "deberta": {
+  "tool": {
+   "model": [
+    2,
+    10
+   ],
+   "bus": [
+    0,
+    10
+   ],
+   "tool": [
+    2,
+    10
+   ]
+  },
+  "user": {
+   "model": [
+    0,
+    10
+   ],
+   "bus": [
+    0,
+    10
+   ],
+   "tool": [
+    0,
+    10
+   ]
+  },
+  "agent": {
+   "model": [
+    2,
+    10
+   ],
+   "bus": [
+    2,
+    10
+   ],
+   "tool": [
+    0,
+    10
+   ]
+  },
+  "memory": {
+   "model": [
+    0,
+    10
+   ],
+   "bus": [
+    0,
+    10
+   ],
+   "tool": [
+    0,
+    10
+   ]
+  }
+ }
+}

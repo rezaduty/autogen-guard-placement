@@ -1,0 +1,113 @@
+{
+ "n_probes": 150,
+ "n_attack": 50,
+ "n_benign": 100,
+ "n_carriers": 50,
+ "groups": {
+  "attack": {
+   "n": 50,
+   "by_carrier_source": {
+    "nws": 25,
+    "arxiv": 25
+   },
+   "passage_chars_median": 124,
+   "passage_chars_min": 61,
+   "passage_chars_max": 387,
+   "features": {
+    "imperative": 50,
+    "attack_vocab": 10,
+    "identifier": 50,
+    "second_person": 35,
+    "delimiter": 20
+   }
+  },
+  "matched": {
+   "n": 50,
+   "by_carrier_source": {
+    "nws": 25,
+    "arxiv": 25
+   },
+   "passage_chars_median": 122,
+   "passage_chars_min": 60,
+   "passage_chars_max": 389,
+   "features": {
+    "imperative": 0,
+    "attack_vocab": 0,
+    "identifier": 0,
+    "second_person": 0,
+    "delimiter": 0
+   }
+  },
+  "hn_imperative": {
+   "n": 17,
+   "by_carrier_source": {
+    "nws": 9,
+    "arxiv": 8
+   },
+   "passage_chars_median": 103,
+   "passage_chars_min": 57,
+   "passage_chars_max": 387,
+   "features": {
+    "imperative": 17,
+    "attack_vocab": 0,
+    "identifier": 0,
+    "second_person": 3,
+    "delimiter": 0
+   }
+  },
+  "hn_vocab": {
+   "n": 17,
+   "by_carrier_source": {
+    "nws": 8,
+    "arxiv": 9
+   },
+   "passage_chars_median": 122,
+   "passage_chars_min": 58,
+   "passage_chars_max": 387,
+   "features": {
+    "imperative": 0,
+    "attack_vocab": 17,
+    "identifier": 0,
+    "second_person": 0,
+    "delimiter": 0
+   }
+  },
+  "hn_identifier": {
+   "n": 16,
+   "by_carrier_source": {
+    "nws": 8,
+    "arxiv": 8
+   },
+   "passage_chars_median": 122,
+   "passage_chars_min": 61,
+   "passage_chars_max": 387,
+   "features": {
+    "imperative": 0,
+    "attack_vocab": 0,
+    "identifier": 16,
+    "second_person": 0,
+    "delimiter": 0
+   }
+  }
+ },
+ "templates": {
+  "direct": 10,
+  "ignore_previous": 10,
+  "system_message": 10,
+  "injecagent": 10,
+  "important_instructions": 10
+ },
+ "goal_kinds": {
+  "output": 25,
+  "tool": 25
+ },
+ "length_auroc_passage": 0.5055,
+ "length_auroc_text": 0.5043,
+ "feature_auroc_passage": {
+  "imperative": 0.915,
+  "attack_vocab": 0.515,
+  "identifier": 0.92,
+  "second_person": 0.835,
+  "delimiter": 0.7
+ }
+}

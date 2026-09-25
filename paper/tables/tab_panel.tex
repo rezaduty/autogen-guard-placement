@@ -1,0 +1,13 @@
+\begin{tabular}{lrrrrrrr}
+\toprule
+ & \multicolumn{3}{c}{attacks flagged} & \multicolumn{2}{c}{benign flagged} & & \\
+detector & probe & passage & memory & matched & hard neg. & NotInject & deepset \\
+\midrule
+ProtectAI DeBERTa v2 & 8/50 & 45/50 & 3/50 & 0/50 & 0/50 & 147/339 & 22/60 \\
+PIGuard & 46/50 & 45/50 & 44/50 & 1/50 & 16/50 & 39/339 & 40/60 \\
+deepset DeBERTa & 50/50 & 50/50 & 50/50 & 50/50 & 50/50 & 242/339 & 59/60 \\
+DistilBERT (fmops) & 50/50 & 50/50 & 50/50 & 50/50 & 50/50 & 243/339 & 49/60 \\
+LLM guard, 9B & 50/50 & 29/50 & 33/50 & 0/50 & 4/50 & 12/339 & 36/60 \\
+LLM guard, 27B & 50/50 & 50/50 & 50/50 & 0/50 & 15/50 & 27/339 & 39/60 \\
+\bottomrule
+\end{tabular}
